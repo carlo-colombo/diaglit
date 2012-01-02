@@ -52,8 +52,12 @@ describe('diaglit',function(){
 
 		it('should have method open',function(){
 			expect(d.open).to.be.a('function')
+			d.open()
 		})
-		it('should have method close')
+		it('should have method close',function(){
+			expect(d.close).to.be.a('function')
+		})
+			
 		it('should have a DOM read-only property')
 	})
 
