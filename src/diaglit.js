@@ -8,7 +8,14 @@
 }('diaglit', this, function ($) {
 	return function(dialog, options){
 	
-		var _ = require('underscore')
+		var _ = require('underscore'),
+			_diaglit = {},
+			li = _.template('\
+							<li>\
+					<a href="<%= href %>"><%= label %></a>\
+				</li>\
+			') //li template definition
+
 		if(_.isFunction(options)){
 			options = {
 				callback: options
@@ -17,8 +24,6 @@
 		options = _.defaults(options || {}, {
 			appendTo : 'body'
 		})
-
-		var _diaglit = {}
 
 		//dialog skeleton
 		_diaglit.$dialog  = $(_.template('\
@@ -39,14 +44,19 @@
 		',{
 			id: 'dialog_'+dialog.title.replace(' ',''),
 			title: dialog.title,			
-		})).appendTo(options.appendTo)
+		}))
+		//.appendTo(options.appendTo)
+		// .modal({
+		// 	backdrop:true
+		// })
 
 		//tabs and fieldset appending
 		_(dialog.tabs).map(function(v,k){
 			return [
-				$('<li>').append($('<a>').attr({
-					href: '#'+k
-				}).text(v.label || k)),
+				$(li({
+					href: '#'+k,
+					label: v.label || k
+				})),
 				_.reduce(v.fields,function($fieldset, field){
 					return $fieldset.append($('<input>').attr(field))//todo complete
 				},$('<fieldset>'))
@@ -58,7 +68,11 @@
 		},_diaglit.$dialog.find('ul,form'))
 
 		_diaglit.open = function(){
-			_diaglit.$dialog.show()	
+			_diaglit
+				.$dialog
+				.appendTo(options.appendTo)
+				.modal()
+				.modal('close')
 		}
 
 		return _diaglit;
