@@ -1,3 +1,5 @@
+var expect = require('chai').expect
+
 describe('diaglit',function(){
 	var diaglit
 
@@ -48,7 +50,9 @@ describe('diaglit',function(){
 	describe('when created',function(){
 		var d = require('diaglit')(dialog1)
 
-		it('should have method open')
+		it('should have method open',function(){
+			expect(d.open).to.be.a('function')
+		})
 		it('should have method close')
 		it('should have a DOM read-only property')
 	})
