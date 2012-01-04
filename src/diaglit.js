@@ -139,7 +139,7 @@
 		return $('<input>')
 			.attr(_(control).extend({
 				id: control.name
-			}));
+			})).css('height','auto');  // ??? fix ???
 	}
 
 	return _controls
