@@ -75,6 +75,7 @@
 			d.find('.btn.cancel').bind('click',function(){
 					$(this).closest('.modal').modal('hide');
 				})
+			// d.find('.btn.save').bind
 		})(_diaglit.$dialog)
 
 		_diaglit.show = function(){
