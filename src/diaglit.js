@@ -11,14 +11,14 @@
 		var _ = require('underscore'),
 			_diaglit = {},
 			li = _.template('\
-							<li>\
+				<li>\
 					<a href="<%= href %>"><%= label %></a>\
 				</li>\
 			') //li template definition
 
 		if(_.isFunction(options)){
 			options = {
-				callback: options
+				onSubmit: options
 			}
 		}
 		options = _.defaults(options || {}, {
@@ -42,13 +42,14 @@
 		         </div>\
 			</div>\
 		',{
-			id: 'dialog_'+dialog.title.replace(' ',''),
+			id: _.uniqueId('dialog_'+dialog.title.replace(' ','')),
 			title: dialog.title,			
 		}))
-		//.appendTo(options.appendTo)
-		// .modal({
-		// 	backdrop:true
-		// })
+		.hide()
+		.appendTo(options.appendTo)
+		.modal({
+			backdrop:true
+		})
 
 		//tabs and fieldset appending
 		_(dialog.tabs).map(function(v,k){
@@ -67,14 +68,20 @@
 			})
 		},_diaglit.$dialog.find('ul,form'))
 
-		_diaglit.open = function(){
+		_diaglit.show = function(){
 			_diaglit
 				.$dialog
-				.appendTo(options.appendTo)
-				.modal()
-				.modal('close')
+				.modal('show')
 		}
 
 		return _diaglit;
 	}
+})
+
+!function (name, context, definition) {
+  if (typeof module !== 'undefined') module.exports = definition(name, context);
+  else if (typeof define === 'function' && typeof define.amd  === 'object') define(definition);
+  else context[name] = definition(ender);
+}('diaglit.control', this, function ($) {
+	return {}
 })
