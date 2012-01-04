@@ -9,6 +9,7 @@
 	return function(dialog, options){
 	
 		var _ = require('underscore'),
+			controls = require('diaglit.controls')
 			_diaglit = {},
 			li = _.template('\
 				<li>\
@@ -59,7 +60,7 @@
 					label: v.label || k
 				})),
 				_.reduce(v.fields,function($fieldset, field){
-					return $fieldset.append($('<input>').attr(field))//todo complete
+					return $fieldset.append(controls[field.type](field))//todo complete
 				},$('<fieldset>'))
 			]
 		}).reduce(function(memo,tab){
@@ -82,6 +83,62 @@
   if (typeof module !== 'undefined') module.exports = definition(name, context);
   else if (typeof define === 'function' && typeof define.amd  === 'object') define(definition);
   else context[name] = definition(ender);
-}('diaglit.control', this, function ($) {
-	return {}
+}('diaglit.controls', this, function ($) {
+	var _controls ={},
+		_ = require('underscore'),
+		control_tpl = _.template('\
+			<div>\
+				<label for="<%= name %>"><%= label %></label>\
+			<div>\
+			<div>\
+				<% if(help) { %>\
+					<span class="help-block">\
+						<%= help %>\
+					</span>\
+				<% } %>\
+			</div>')
+
+	//export control type
+	_.each(['text','time','date','datetime', 'password', 'email','range','number'],function(ctrl){
+		_controls[ctrl] = field(input);
+	});
+
+	//textarea control	
+	_controls['textarea'] = field(function(control){
+		var prop = $.extend(control,{
+			id: control.name,
+			text: control.value
+		});
+
+		return $('<textarea>',prop);
+	});
+
+	//input type hidden doesn't need field
+	_controls['hidden'] = input;
+
+
+	function field (makeInput) {
+		return function(control){
+			var label = control.label || function(name){
+				return name.charAt(0).toUpperCase()
+					+ name.substring(1);
+			}
+
+			return $(control_tpl({
+				name : control.name,
+				label: _.isFunction(label) ? label(control.name) : label,
+				help : control.help
+			})).find('div:eq(2)')
+				.prepend(makeInput(control))
+		}
+	}
+
+	function input(control){
+		return $('<input>')
+			.attr(_(control).extend({
+				id: control.name	
+			}));
+	}
+
+	return _controls
 })

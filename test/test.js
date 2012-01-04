@@ -81,11 +81,17 @@ ender.domReady(function(){
 			// })
 		})
 
-		describe('Control',function(){
-			var Control;
+		describe('controls',function(){
+			var controls;
 
 			it('should be exposed', function(){
-				Control = require('diaglit.control')
+				controls = require('diaglit.controls')
+			})
+
+			it('should contain Control')
+
+			describe('Control',function(){
+				
 			})
 		})
 	})
