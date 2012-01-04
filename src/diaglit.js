@@ -87,15 +87,15 @@
 	var _controls ={},
 		_ = require('underscore'),
 		control_tpl = _.template('\
-			<div>\
+			<div class="clearfix">\
 				<label for="<%= name %>"><%= label %></label>\
-			<div>\
-			<div>\
-				<% if(help) { %>\
-					<span class="help-block">\
-						<%= help %>\
-					</span>\
-				<% } %>\
+				<div class="input">\
+					<% if(help) { %>\
+						<span class="help-block">\
+							<%= help %>\
+						</span>\
+					<% } %>\
+				</div>\
 			</div>')
 
 	//export control type
@@ -120,23 +120,25 @@
 	function field (makeInput) {
 		return function(control){
 			var label = control.label || function(name){
-				return name.charAt(0).toUpperCase()
-					+ name.substring(1);
-			}
-
-			return $(control_tpl({
-				name : control.name,
-				label: _.isFunction(label) ? label(control.name) : label,
-				help : control.help
-			})).find('div:eq(2)')
+					return name.charAt(0).toUpperCase()
+						+ name.substring(1);
+				},
+				_field = $(control_tpl({
+					name : control.name,
+					label: _.isFunction(label) ? label(control.name) : label,
+					help : control.help
+				}))
+				_field.find('.input')
 				.prepend(makeInput(control))
+
+			return _field 
 		}
 	}
 
 	function input(control){
 		return $('<input>')
 			.attr(_(control).extend({
-				id: control.name	
+				id: control.name
 			}));
 	}
 
