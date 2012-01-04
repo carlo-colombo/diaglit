@@ -116,7 +116,7 @@
 	//input type hidden doesn't need field
 	_controls['hidden'] = input;
 
-
+	// field generator
 	function field (makeInput) {
 		return function(control){
 			var label = control.label || function(name){
@@ -135,6 +135,7 @@
 		}
 	}
 
+	// input generator
 	function input(control){
 		return $('<input>')
 			.attr(_(control).extend({
