@@ -102,9 +102,13 @@ ender.domReady(function(){
 							name: 'minimal_with_help',
 							'help' :'this is a help-block'
 						},{
-							name:  'textarea field',
+							name:  'textarea_field',
 							type:  'textarea',
 							value: 'this is a textarea value'
+						},{
+							name:  'hidden_field',
+							type:  'hidden',
+							value: 'hide this'
 						}
 					]
 				
@@ -157,6 +161,22 @@ ender.domReady(function(){
 					})
 				})
 
+				describe('hidden input field',function() {
+					var hidden = controls.field(fields[4])
+					it('should be only an input tag',function() {
+
+						expect(hidden.is('input')).to.be.true
+					})
+
+					it('should have type equal hidden',function() {
+						expect(hidden.attr('type')).to.be.equal('hidden')
+					})
+
+
+					it('should have value as configured',function() {
+						expect(hidden.attr('value')).to.be.equal('hide this')
+					})
+				})
 			})
 		})
 	})
