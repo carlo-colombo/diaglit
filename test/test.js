@@ -99,36 +99,50 @@ ender.domReady(function(){
 			describe('Control',function(){
 				var fields = [
 						{
-							name: 'minimal_configuration_field'
-						},
-						{
 							name: 'text_field',
-							type: 'text'
-						},
-						{
-							name: 'with_placeholder',
 							type: 'text',
-							placeholder: 'this is a placeholder'
+							placeholder: 'this is a placeholder',
+						},{
+							name: 'minimal_configuration_field'
+						},{
+							name: 'minimal_with_help',
+							'help-block' :'this is a help-block'
 						}
 					]
+				describe('text field',function(){
+					
+					it('should create a text field',function(){
+						var text = controls.field(fields[0]),
+							input = text.find('input'),
+							label = text.find('label'),
+							help  = text.find('.help-block')
 
-				it('should work with name as only parameter',function(){
-					var text = controls.field(fields[0]),
-						input = text.find('input'),
-						label = text.find('label')
+						expect(text).to.be.not.empty
+						expect(input).to.be.not.empty
+						expect(help).to.be.empty
 
-					expect(text).to.be.not.empty
-					expect(input).to.be.not.empty
-					expect(input).to.have.length(1)
-					expect(input.attr('type')).to.be.equal('text')
-					expect(input.attr('name')).to.be.equal('minimal_configuration_field')
-					expect(input.attr('id')).to.be.equal('minimal_configuration_field')
-					expetc(label.attr('for')).to.be.equal('minimal_configuration_field')
-					expetc(label.text()).to.be.equal('Minimal configuration field')
+						expect(input.attr('type')).to.be.equal('text')		
+						expect(input.attr('name')).to.be.equal('text_field')
+						expect(input.attr('id')).to.be.equal('text_field')
 
+						expect(label.attr('for')).to.be.equal('text_field')
+						expect(label.text()).to.be.equal('Text field')
+					})
+
+					it('should work with name as only parameter',function(){
+						var input = controls.field(fields[1]).find('input')
+						
+						expect(input.attr('type')).to.be.equal('text')
+					})
+
+					it('should create span.help-block',function() {
+						var help = controls.field(fields[2]).find('.help-block')
+						
+						expect(help).to.be.not.empty
+						expect(help.text()).to.be.equal('this is a help-block')
+					})
 				})
-				it('should create a text field')
-				it('should create a text field with placeholder')
+
 			})
 		})
 	})
