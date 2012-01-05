@@ -169,4 +169,32 @@ ender.domReady(function(){
 			})
 		})
 	})
+
+	describe('pluggable controls',function() {
+		it('should accept additional control',function() {
+			var c = require('diaglit.controls');
+			
+			c['custom'] = function(){
+				return $('<span class="kustom">').text('kustom Kontrol')
+			}
+			
+			var d = require('diaglit')({
+				title: 'kustomized control',
+				tabs : {
+					tab : {
+						label  : 'tab',	
+						fields : [
+							{
+								type: 'custom',
+								name: 'Kustom'
+							}
+						]
+					}
+				}		
+			})
+
+			expect(d.$dialog.find('.kustom')).to.be.not.empty
+			expect(d.$dialog.find('.kustom').is('span')).to.be.true
+		})
+	})
 })
