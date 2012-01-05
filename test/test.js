@@ -133,7 +133,7 @@ ender.domReady(function(){
 						var help = controls.field(fields[2]).find('.help-block')
 						
 						expect(help).to.be.not.empty
-						expect(help.text()).to.be.equal('this is a help-block')
+						expect(help.text().trim()).to.be.equal('this is a help-block')
 					})
 				})
 
