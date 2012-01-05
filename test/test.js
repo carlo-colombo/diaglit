@@ -151,29 +151,18 @@ ender.domReady(function(){
 				describe('textarea field',function() {
 					var textarea = controls.field(fields[3])
 						.find('textarea')
-					
-					it('should create a textarea',function() {
+					it('should create textarea as configured',function() {
 						expect(textarea).to.be.not.empty
-					})
-
-					it('should use value to defining inner text',function() {
 						expect(textarea.text().trim()).to.be.equal('this is a textarea value')
-					})
+					})					
 				})
 
 				describe('hidden input field',function() {
 					var hidden = controls.field(fields[4])
-					it('should be only an input tag',function() {
-
+					it('should create input as configured',function() {
 						expect(hidden.is('input')).to.be.true
-					})
-
-					it('should have type equal hidden',function() {
 						expect(hidden.attr('type')).to.be.equal('hidden')
-					})
-
-
-					it('should have value as configured',function() {
+						expect(hidden.attr('name')).to.be.equal('hidden_field')
 						expect(hidden.attr('value')).to.be.equal('hide this')
 					})
 				})
