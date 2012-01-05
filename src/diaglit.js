@@ -60,7 +60,7 @@
 					label: v.label || k
 				})),
 				_.reduce(v.fields,function($fieldset, field){
-					return $fieldset.append(controls[field.type](field))//todo complete
+					return $fieldset.append(controls.field(field))
 				},$('<fieldset>'))
 			]
 		}).reduce(function(memo,tab){
@@ -76,12 +76,6 @@
 				d.modal('hide')
 			})
 		})(_diaglit.$dialog);
-
-		_diaglit.show = function(){
-			_diaglit
-				.$dialog
-				.modal('show')
-		}
 
 		return _diaglit;
 	}
@@ -99,9 +93,7 @@
 				<label for="<%= name %>"><%= label %></label>\
 				<div class="input">\
 					<% if(help) { %>\
-						<span class="help-block">\
-							<%= help %>\
-						</span>\
+						<span class="help-block"><%= help %></span>\
 					<% } %>\
 				</div>\
 			</div>')
@@ -150,6 +142,13 @@
 				id: control.name
 			})).css('height','auto');  // ??? fix ???
 	}
+
+	Object.defineProperty(_controls,'field',{
+		enumerable: false,
+		value : function (field){
+			return _controls[field.type || 'text' ](field)
+		}
+	})
 
 	return _controls
 })
