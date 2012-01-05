@@ -1,8 +1,10 @@
 var expect = require('chai').expect
 ender.domReady(function(){
+
 	describe('diaglit',function(){
 		var diaglit,
 			d,
+			_ = require('underscore'),
 		    dialog1 = {
 				"tabs":{
 					"tab1" : {
@@ -88,7 +90,11 @@ ender.domReady(function(){
 				controls = require('diaglit.controls')
 			})
 
-			it('should contain Control')
+			it('should contain Control',function(){
+				_(controls).each(function(c){
+					expect(c).to.be.a('function')
+				})
+			})
 
 			describe('Control',function(){
 				
