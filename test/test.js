@@ -101,8 +101,15 @@ ender.domReady(function(){
 						},{
 							name: 'minimal_with_help',
 							'help' :'this is a help-block'
+						},{
+							name:  'textarea field',
+							type:  'textarea',
+							value: 'this is a textarea value'
 						}
 					]
+				
+				controls = require('diaglit.controls')
+
 				describe('text field',function(){
 					
 					it('should create a text field',function(){
@@ -125,7 +132,7 @@ ender.domReady(function(){
 
 					it('should work with name as only parameter',function(){
 						var input = controls.field(fields[1]).find('input')
-						
+				
 						expect(input.attr('type')).to.be.equal('text')
 					})
 
@@ -134,6 +141,19 @@ ender.domReady(function(){
 						
 						expect(help).to.be.not.empty
 						expect(help.text().trim()).to.be.equal('this is a help-block')
+					})
+				})
+
+				describe('textarea field',function() {
+					var textarea = controls.field(fields[3])
+						.find('textarea')
+					
+					it('should create a textarea',function() {
+						expect(textarea).to.be.not.empty
+					})
+
+					it('should use value to defining inner text',function() {
+						expect(textarea.text().trim()).to.be.equal('this is a textarea value')
 					})
 				})
 
