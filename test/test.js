@@ -49,11 +49,6 @@ ender.domReady(function(){
 			d = diaglit(dialog1,function () {})
 		})
 
-		// afterEach(function(done){
-		// 	// d && d.$dialog.remove()
-		// 	done()
-		// })
-
 		describe('when created',function(){
 			var d = require('diaglit')(dialog1)
 
