@@ -58,29 +58,28 @@ ender.domReady(function(){
 			var d = require('diaglit')(dialog1)
 
 			describe('show method',function(){
-				it('should exist',function(){
-					expect(d.show).to.be.a('function')
-				})
-
 				it('should work',function(){
-					d.show()
+					d.$dialog.modal('show')
+					expect(d.$dialog.css('display')).to.be.not.equal('none')
 				})
 			})
 
 			
 			describe('hide method',function(){
-				it('should exist',function(){
-					expect(d.hide).to.be.a('function')
-				})
-
 				it('should work',function(){
-					d.hide()
+					d.$dialog.modal('hide')
+					expect(d.$dialog.css('display')).to.be.equal('none')
 				})
 			})
+			
+			describe('toggle method',function(){
+				var state = d.$dialog.css('display')
 
-			// afterEach(function(done){
-			// 	done()
-			// })
+				it('should work',function(){
+					d.$dialog.modal('toggle')
+					expect(d.$dialog.css('display')).to.be.not.equal(state)
+				})
+			})
 		})
 
 		describe('controls',function(){
