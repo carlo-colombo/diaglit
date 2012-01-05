@@ -68,7 +68,7 @@ ender.domReady(function(){
 			})
 
 			
-			describe('show method',function(){
+			describe('hide method',function(){
 				it('should exist',function(){
 					expect(d.hide).to.be.a('function')
 				})
