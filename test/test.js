@@ -105,7 +105,7 @@ ender.domReady(function(){
 							name: 'minimal_configuration_field'
 						},{
 							name: 'minimal_with_help',
-							'help-block' :'this is a help-block'
+							'help' :'this is a help-block'
 						}
 					]
 				describe('text field',function(){
