@@ -97,7 +97,38 @@ ender.domReady(function(){
 			})
 
 			describe('Control',function(){
-				
+				var fields = [
+						{
+							name: 'minimal_configuration_field'
+						},
+						{
+							name: 'text_field',
+							type: 'text'
+						},
+						{
+							name: 'with_placeholder',
+							type: 'text',
+							placeholder: 'this is a placeholder'
+						}
+					]
+
+				it('should work with name as only parameter',function(){
+					var text = controls.field(fields[0]),
+						input = text.find('input'),
+						label = text.find('label')
+
+					expect(text).to.be.not.empty
+					expect(input).to.be.not.empty
+					expect(input).to.have.length(1)
+					expect(input.attr('type')).to.be.equal('text')
+					expect(input.attr('name')).to.be.equal('minimal_configuration_field')
+					expect(input.attr('id')).to.be.equal('minimal_configuration_field')
+					expetc(label.attr('for')).to.be.equal('minimal_configuration_field')
+					expetc(label.text()).to.be.equal('Minimal configuration field')
+
+				})
+				it('should create a text field')
+				it('should create a text field with placeholder')
 			})
 		})
 	})
