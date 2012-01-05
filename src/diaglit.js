@@ -69,14 +69,6 @@
 			})
 		},_diaglit.$dialog.find('ul,form'))
 
-		//setting up class and events
-		(function(d){
-			d.find('li:eq(1),fieldset:eq(1)').addClass('active')
-			d.find('.btn.cancel').bind('click',function(){
-					$(this).closest('.modal').modal('hide');
-				})
-		})(_diaglit.$dialog)
-
 		_diaglit.show = function(){
 			_diaglit
 				.$dialog
