@@ -50,9 +50,23 @@ ender.domReady(function(){
 		})
 
 		describe('when created',function(){
-			var d = require('diaglit')(dialog1)
 			it('should have a Modal istance as attribute data-modal',function() {
+				var d = require('diaglit')(dialog1)
 				expect(d.$dialog.data('modal')).to.be.an.instanceof(ender.fn.modal.Modal)
+			})
+
+			it('should initialize dialog using data option',function() {
+				var d = require('diaglit')(dialog1,{
+						data:{
+							'title' : 'overriding title',
+							'level' : 30
+						}
+					}),
+					title = d.$dialog.find('[name=title]'),
+					level = d.$dialog.find('[name=level]')
+				
+				expect(title.attr('value')).to.be.equal('overriding title')
+				expect(level.attr('value')).to.be.equal(30)
 			})
 		})
 
