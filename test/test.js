@@ -199,6 +199,29 @@ ender.domReady(function(){
 						expect(hidden.attr('value')).to.be.equal('this is data')
 					})
 				})
+
+				describe('select options field',function() {
+					var field = {
+							name: 'option_field',
+							type: 'option',
+							options: [
+								'value option',
+								{'label':'value'},
+								{
+									'label2':'value2',
+									'selected': true
+								}
+							]
+						}
+						option = controls.field(field),
+						optionWithData = controls.field(field,{
+							'option_field' : 'value option'
+						})
+
+					it('should create select-option html')
+					it('should set selected where attribute is present')
+					it('should permit data overriding selected value')
+				})
 			})
 		
 			describe('pluggable controls',function() {
