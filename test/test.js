@@ -51,29 +51,8 @@ ender.domReady(function(){
 
 		describe('when created',function(){
 			var d = require('diaglit')(dialog1)
-
-			describe('show method',function(){
-				it('should work',function(){
-					d.$dialog.modal('show')
-					expect(d.$dialog.css('display')).to.be.not.equal('none')
-				})
-			})
-
-			
-			describe('hide method',function(){
-				it('should work',function(){
-					d.$dialog.modal('hide')
-					expect(d.$dialog.css('display')).to.be.equal('none')
-				})
-			})
-			
-			describe('toggle method',function(){
-				var state = d.$dialog.css('display')
-
-				it('should work',function(){
-					d.$dialog.modal('toggle')
-					expect(d.$dialog.css('display')).to.be.not.equal(state)
-				})
+			it('should have a Modal istance as attribute data-modal',function() {
+				expect(d.$dialog.data('modal')).to.be.an.instanceof(ender.fn.modal.Modal)
 			})
 		})
 
