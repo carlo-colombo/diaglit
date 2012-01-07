@@ -74,12 +74,13 @@ ender.domReady(function(){
 						{
 							name: 'text_field',
 							type: 'text',
-							placeholder: 'this is a placeholder',
+							placeholder: 'this is a placeholder'
 						},{
 							name: 'minimal_configuration_field'
 						},{
 							name: 'minimal_with_help',
-							'help' :'this is a help-block'
+							'help' :'this is a help-block',
+							value: 'default value'
 						},{
 							name:  'textarea_field',
 							type:  'textarea',
@@ -88,6 +89,10 @@ ender.domReady(function(){
 							name:  'hidden_field',
 							type:  'hidden',
 							value: 'hide this'
+						},{
+							name: 'text_field',
+							type: 'text',
+							value: 'this is a default value'
 						}
 					]
 				
@@ -125,6 +130,26 @@ ender.domReady(function(){
 						expect(help).to.be.not.empty
 						expect(help.text().trim()).to.be.equal('this is a help-block')
 					})
+
+					describe('data',function() {
+						it('should used to initialize control',function(){
+							var text = controls.field(fields[0],{
+									'text_field' : 'this is data'
+								}),
+								input = text.find('input')
+							
+							expect(input.attr('value')).to.be.equal('this is data')
+						})
+
+						it('should override default value',function() {
+							var input = controls.field(fields[5],{
+								'text_field' : 'this override default'
+							}).find('input')
+
+							expect(input.attr('value')).to.be.equal('this override default')
+						})
+						
+					})
 				})
 
 				describe('textarea field',function() {
@@ -133,7 +158,15 @@ ender.domReady(function(){
 					it('should create textarea as configured',function() {
 						expect(textarea).to.be.not.empty
 						expect(textarea.text().trim()).to.be.equal('this is a textarea value')
-					})					
+					})
+
+					var textarea = controls.field(fields[3],{
+						'textarea_field' : 'this is data'
+					}).find('textarea')
+
+					it('should use data to initialize textarea overriding default',function() {
+						expect(textarea.text()).to.be.equal('this is data')
+					})
 				})
 
 				describe('hidden input field',function() {
@@ -143,6 +176,13 @@ ender.domReady(function(){
 						expect(hidden.attr('type')).to.be.equal('hidden')
 						expect(hidden.attr('name')).to.be.equal('hidden_field')
 						expect(hidden.attr('value')).to.be.equal('hide this')
+					})
+
+					var hidden = controls.field(fields[4],{
+						'hidden_field' : 'this is data'
+					})
+					it('should use data to initialize input overriding default',function() {
+						expect(hidden.attr('value')).to.be.equal('this is data')
 					})
 				})
 			})
