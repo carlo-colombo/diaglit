@@ -154,7 +154,7 @@
 				if (!!field.type && !_controls[field.type]) {
 					throw new _controls['NotImplementedException'](field.type)
 				}
-				return _controls[field.type || 'text' ](field)
+				return _controls[field.type || 'text' ](_(field).defaults({type:'text'}))
 			},
 		}
 	})
