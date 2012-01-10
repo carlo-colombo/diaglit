@@ -143,12 +143,23 @@
 			})).css('height','auto');  // ??? fix ???
 	}
 
-	Object.defineProperty(_controls,'field',{
-		enumerable: false,
-		value : function (field){
-			return _controls[field.type || 'text' ](field)
+	_controls['NotImplementedException'] = function(type){this.message = type + " is not implemented"}
+	_controls['NotImplementedException'].prototype = new Error()
+	_controls['NotImplementedException'].prototype.name = 'NotImplementedException'
+
+	Object.defineProperties(_controls,{
+		'field':{
+			enumerable: false,
+			value : function (field){
+				if (!!field.type && !_controls[field.type]) {
+					throw new _controls['NotImplementedException'](field.type)
+				}
+				return _controls[field.type || 'text' ](field)
+			},
 		}
 	})
+
+
 
 	return _controls
 })
