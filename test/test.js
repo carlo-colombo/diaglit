@@ -118,7 +118,7 @@ ender.domReady(function(){
 							controls.field({
 								type: 'not implemented'
 							})
-						}).to.throw(NotImplementedException)
+						}).to.throw(controls.NotImplementedException)
 					})
 				})
 
