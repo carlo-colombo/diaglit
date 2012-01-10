@@ -66,7 +66,7 @@ ender.domReady(function(){
 					level = d.$dialog.find('[name=level]')
 				
 				expect(title.attr('value')).to.be.equal('overriding title')
-				expect(level.attr('value')).to.be.equal(30)
+				expect(level.attr('value')).to.be.equal('30')
 			})
 		})
 
