@@ -230,26 +230,30 @@ ender.domReady(function(){
 							]
 						}
 						
-					it('should create select-option html',function(){
-						var select = controls.field(field);
+					
+					var select = controls.field(field);
 
+					it('should create html select with name attribute',function(){
 						expect(select.find('select')).to.be.not.empty;
 						expect(select.find('select').attr('name')).to.be.equal('select_field')
-						
+					})
+					
+					it('should create 3 options inside select',function(){
 						expect(select.find('select > option')).to.be.not.empty;
 						expect(select.find('select > option').length).to.be.equal(3)
-
-						expect(select.find('select > option:eq(1)').val()).to.be.equal('value option')
-						expect(select.find('select > option:eq(1)').text().trim()).to.be.equal('value option')
-
-						expect(select.find('select > option:eq(2)').val()).to.be.equal('value')
-						expect(select.find('select > option:eq(2)').text().trim()).to.be.equal('label')
-
 					})
 
-					it('should set selected where attribute is present',function() {
-						var select = controls.field(field);
+					it('should set first option configured as String',function(){						
+						expect(select.find('select > option:nth-child(1)').val()).to.be.equal('value option')
+						expect(select.find('select > option:nth-child(1)').text().trim()).to.be.equal('value option')
+					})
 
+					it('should set second option configured as Object',function(){
+						expect(select.find('select > option:nth-child(2)').val()).to.be.equal('value')
+						expect(select.find('select > option:nth-child(2)').text().trim()).to.be.equal('label')
+					})
+					
+					it('should set selected where attribute is present',function() {
 						expect(select.find('select > option[selected]')).to.be.not.empty
 						expect(select.find('select > option[selected]').text().trim()).to.be.equal('label2')
 					})
