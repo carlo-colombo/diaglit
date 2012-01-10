@@ -8,5 +8,5 @@
        "qwery": "*", "bean": "*", "ender-twitter-bootstrap": "*" , "underscore" : "*"
     }
   , "main"          : "src/diaglit.js"
-  , "version"       : "0.1"
+  , "version"       : "0.1.0"
 }

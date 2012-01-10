@@ -57,9 +57,12 @@ Use
 		"title": "Properties"
 	}
 ``` 
-* Configurable submit function ```dialog = diaglit({...}, {
-	onSubmit : function(){...}
-});``` 
+* Configurable submit function 
+```
+	dialog = diaglit({...}, {
+		onSubmit : function(){...}
+	});
+``` 
 shortcut: `dialog = diaglit({...}, function(){})`
 * Data initialization 
 	```
