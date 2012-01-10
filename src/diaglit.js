@@ -121,7 +121,7 @@
 		return function(control){
 			var label = control.label || function(name){
 					return name.charAt(0).toUpperCase()
-						+ name.substring(1);
+						+ name.substring(1).replace('_',' ');
 				},
 				_field = $(control_tpl({
 					name : control.name,
