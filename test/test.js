@@ -177,18 +177,18 @@ ender.domReady(function(){
 				})
 
 				describe('textarea field',function() {
-					var textarea = controls.field(fields[3])
-						.find('textarea')
 					it('should create textarea as configured',function() {
+						var textarea = controls.field(fields[3]).find('textarea')
+
 						expect(textarea).to.be.not.empty
 						expect(textarea.text().trim()).to.be.equal('this is a textarea value')
 					})
 
-					var textarea = controls.field(fields[3],{
-						'textarea_field' : 'this is data'
-					}).find('textarea')
-
 					it('should use data to initialize textarea overriding default',function() {
+						var textarea = controls.field(fields[3],{
+							'textarea_field' : 'this is data'
+						}).find('textarea')
+
 						expect(textarea.text()).to.be.equal('this is data')
 					})
 				})
