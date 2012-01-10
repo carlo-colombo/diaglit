@@ -19,7 +19,8 @@
 
 		if(_.isFunction(options)){
 			options = {
-				onSubmit: options
+				'onSubmit': options,
+				'data': {}
 			}
 		}
 		options = _.defaults(options || {}, {
@@ -60,7 +61,7 @@
 					label: v.label || k
 				})),
 				_.reduce(v.fields,function($fieldset, field){
-					return $fieldset.append(controls.field(field))
+					return $fieldset.append(controls.field(field,options['data']))
 				},$('<fieldset>'))
 			]
 		}).reduce(function(memo,tab){
