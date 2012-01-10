@@ -76,6 +76,12 @@
 				e.stop()
 				d.modal('hide')
 			})
+			if(options['onSubmit']){
+				d.find('.btn.save', options['onSubmit'])
+				if(options['hideOnSubmit']){
+					d.modal('close')
+				}
+			}
 		})(_diaglit.$dialog);
 
 		return _diaglit;
