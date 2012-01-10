@@ -112,6 +112,16 @@ ender.domReady(function(){
 				
 				controls = require('diaglit.controls')
 
+				describe('field function',function(){
+					it('should throw NotImplementedException if control is not implemented',function(){
+						expect(function() {
+							controls.field({
+								type: 'not implemented'
+							})
+						}).to.throw(NotImplementedException)
+					})
+				})
+
 				describe('text field',function(){
 					
 					it('should create a text field',function(){
@@ -202,8 +212,8 @@ ender.domReady(function(){
 
 				describe('select options field',function() {
 					var field = {
-							name: 'option_field',
-							type: 'option',
+							name: 'select_field',
+							type: 'select',
 							options: [
 								'value option',
 								{'label':'value'},
@@ -212,13 +222,17 @@ ender.domReady(function(){
 									'selected': true
 								}
 							]
-						}
-						option = controls.field(field),
-						optionWithData = controls.field(field,{
-							'option_field' : 'value option'
+						},
+						select = controls.field(field),
+						selectWithData = controls.field(field,{
+							'select_field' : 'value option'
 						})
 
-					it('should create select-option html')
+					it('should create select-option html',function(){
+						expect(select.find('select')).to.be.not.null;
+						expect(select.find('select > option')).to.be.not.null
+						expect(select.find('select > option')).to.be.length(3)
+					})
 					it('should set selected where attribute is present')
 					it('should permit data overriding selected value')
 				})
