@@ -104,13 +104,14 @@
 	});
 
 	//textarea control	
-	_controls['textarea'] = field(function(control){
-		var prop = $.extend(control,{
-			id: control.name,
-			text: control.value
+	_controls['textarea'] = field(function(control,data){
+		var prop = _.extend(control,{
+			id: control.name
 		});
 
-		return $('<textarea>',prop);
+		return $('<textarea>')
+			.attr(prop)
+			.text(data && data[control.name] || control.value);
 	});
 
 	//input type hidden doesn't need field
@@ -118,7 +119,7 @@
 
 	// field generator
 	function field (makeInput) {
-		return function(control){
+		return function(control,data){
 			var label = control.label || function(name){
 					return name.charAt(0).toUpperCase()
 						+ name.substring(1).replace('_',' ');
@@ -129,7 +130,7 @@
 					help : control.help
 				}))
 				_field.find('.input')
-				.prepend(makeInput(control))
+				.prepend(makeInput(control,data))
 
 			return _field 
 		}
@@ -150,11 +151,11 @@
 	Object.defineProperties(_controls,{
 		'field':{
 			enumerable: false,
-			value : function (field){
+			value : function (field,data){
 				if (!!field.type && !_controls[field.type]) {
 					throw new _controls['NotImplementedException'](field.type)
 				}
-				return _controls[field.type || 'text' ](_(field).defaults({type:'text'}))
+				return _controls[field.type || 'text' ](_(field).defaults({type:'text'}),data)
 			},
 		}
 	})
