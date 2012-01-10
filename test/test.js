@@ -254,8 +254,7 @@ ender.domReady(function(){
 					})
 					
 					it('should set selected where attribute is present',function() {
-						expect(select.find('select > option[selected]')).to.be.not.empty
-						expect(select.find('select > option[selected]').text().trim()).to.be.equal('label2')
+						expect(select.find('select > option[selected]:nth-child(3)')).to.be.not.empty
 					})
 
 					it('should permit data overriding selected value',function() {
@@ -263,8 +262,7 @@ ender.domReady(function(){
 							'select_field' : 'value option'
 						})
 
-						expect(selectWithData.find('select > option[selected]')).to.be.not.empty
-						expect(selectWithData.find('select > option[selected]').text().trim()).to.be.equal('value option')
+						expect(selectWithData.find('select > option[selected]:nth-child(1)')).to.be.not.empty
 					})
 				})
 			})
