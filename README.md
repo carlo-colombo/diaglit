@@ -28,7 +28,8 @@ Use
 
 	dialog.$dialog.modal('show')
 ```
-* Example object description ```
+* Example object description
+* ```
 	{
 		"tabs":{
 			"tab1" : {
@@ -57,20 +58,24 @@ Use
 		"title": "Properties"
 	}
 ``` 
-* Configurable submit function ```dialog = diaglit({...}, {
-	onSubmit : function(){...}
-});``` 
+* Configurable submit function 
+* ```
+	dialog = diaglit({...}, {
+		onSubmit : function(){...}
+	});
+``` 
 shortcut: `dialog = diaglit({...}, function(){})`
 * Data initialization 
-	```
+* ```
 	dialog = diaglit({...}, {
 		data: {
 			field_name1: 'value1',
 			field_name2: 12
 		}		
 	});
-	```
-* Custom controls ```
+```
+* Custom controls
+* ```
 	var controls = require('diaglit.controls');
 		controls['custom'] = function(field,data){
 			... return some DOM
