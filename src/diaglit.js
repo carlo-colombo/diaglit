@@ -9,7 +9,7 @@
 	return function(dialog, options){
 	
 		var _ = require('underscore'),
-			controls = require('diaglit.controls')
+			controls = require('diaglit.controls'),
 			_diaglit = {},
 			li = _.template('\
 				<li>\
@@ -117,6 +117,30 @@
 
 	//input type hidden doesn't need field
 	_controls['hidden'] = input;
+
+	//select option field
+	_controls['select'] = field(function(control,data){
+		var t_opt = _.template('<option <%=selected%> value="<%=value %>" ><%=label%></option>'),
+			prop = _(control).clone();
+
+		//removing options from select properties
+		delete prop['options']
+
+		return _(control.options).map(function(opt){
+			if(_.isString(opt)){
+				opt = {
+					'value':opt,
+					'label':opt
+				}
+			}
+			opt['selected'] = data 
+				&& data[control.name]==opt['value'] 
+				|| !!opt['selected'] ? 'selected' : '';
+			return t_opt(opt)	
+		}).reduce(function(select,opt){
+			return select.append(opt)
+		},$('<select>').attr(prop))
+	})
 
 	// field generator
 	function field (makeInput) {
