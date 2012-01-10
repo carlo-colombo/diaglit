@@ -67,6 +67,8 @@ ender.domReady(function(){
 				
 				expect(title.attr('value')).to.be.equal('overriding title')
 				expect(level.attr('value')).to.be.equal('30')
+
+				d.$dialog.modal('show')
 			})
 		})
 
