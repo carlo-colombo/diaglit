@@ -218,42 +218,49 @@ ender.domReady(function(){
 							type: 'select',
 							options: [
 								'value option',
-								{'label':'value'},
 								{
-									'label2':'value2',
+									'label':'label',
+									'value':'value'
+								},
+								{
+									'label':'label2',
+									'value':'value2',
 									'selected': true
 								}
 							]
 						}
 						
 					it('should create select-option html',function(){
-						var select = controls.field(field).$dialog;
+						var select = controls.field(field);
 
-						expect(select.find('select')).to.be.not.null;
-						expect(select.find('select > option'))
-							.to.be.not.null
-							.and
-							.to.have.length(3)
+						expect(select.find('select')).to.be.not.empty;
+						expect(select.find('select').attr('name')).to.be.equal('select_field')
+						
+						expect(select.find('select > option')).to.be.not.empty;
+						expect(select.find('select > option').length).to.be.equal(3)
+
+						expect(select.find('select > option:eq(1)').val()).to.be.equal('value option')
+						expect(select.find('select > option:eq(1)').text().trim()).to.be.equal('value option')
+
+						expect(select.find('select > option:eq(2)').val()).to.be.equal('value')
+						expect(select.find('select > option:eq(2)').text().trim()).to.be.equal('label')
+
 					})
 
 					it('should set selected where attribute is present',function() {
-						var select = controls.field(field).$dialog;
+						var select = controls.field(field);
 
-						expect(select.find('select > option[selected]:eq(3)'))
-							.to.be.not.null
-							.and
-							.to.have.length(1)
+						expect(select.find('select > option[selected]')).to.be.not.empty
+						expect(select.find('select > option[selected]').text().trim()).to.be.equal('label2')
 					})
 
 					it('should permit data overriding selected value',function() {
 						var selectWithData = controls.field(field,{
 							'select_field' : 'value option'
-						}).$dialog
+						})
 
-						expect(selectWithData.find('select > option[selected]:eq(1)'))
-							.to.be.not.null
-							.and
-							.to.have.length(1)
+						expect(selectWithData.find('select > option[selected]')).to.be.not.empty
+						expect(selectWithData.find('select > option[selected]').text().trim()).to.be.equal('value option')
 					})
 				})
 			})
