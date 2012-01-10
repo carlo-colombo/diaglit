@@ -71,7 +71,7 @@
 		},_diaglit.$dialog.find('ul,form'));
 
 		(function(d){
-			d.find('li:eq(1),fieldset:eq(1)').addClass('active')
+			d.find('li:nth-child(1),fieldset:nth-child(1)').addClass('active')
 			d.find('.btn.cancel').bind('click',function(e){
 				e.stop()
 				d.modal('hide')
