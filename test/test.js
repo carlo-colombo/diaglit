@@ -222,19 +222,37 @@ ender.domReady(function(){
 									'selected': true
 								}
 							]
-						},
-						select = controls.field(field),
-						selectWithData = controls.field(field,{
-							'select_field' : 'value option'
-						})
-
+						}
+						
 					it('should create select-option html',function(){
+						var select = controls.field(field).$dialog;
+
 						expect(select.find('select')).to.be.not.null;
-						expect(select.find('select > option')).to.be.not.null
-						expect(select.find('select > option')).to.be.length(3)
+						expect(select.find('select > option'))
+							.to.be.not.null
+							.and
+							.to.have.length(3)
 					})
-					it('should set selected where attribute is present')
-					it('should permit data overriding selected value')
+
+					it('should set selected where attribute is present',function() {
+						var select = controls.field(field).$dialog;
+
+						expect(select.find('select > option[selected]:eq(3)'))
+							.to.be.not.null
+							.and
+							.to.have.length(1)
+					})
+
+					it('should permit data overriding selected value',function() {
+						var selectWithData = controls.field(field,{
+							'select_field' : 'value option'
+						}).$dialog
+
+						expect(selectWithData.find('select > option[selected]:eq(1)'))
+							.to.be.not.null
+							.and
+							.to.have.length(1)
+					})
 				})
 			})
 		
