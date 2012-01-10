@@ -194,18 +194,20 @@ ender.domReady(function(){
 				})
 
 				describe('hidden input field',function() {
-					var hidden = controls.field(fields[4])
 					it('should create input as configured',function() {
+						var hidden = controls.field(fields[4])
+						
 						expect(hidden.is('input')).to.be.true
 						expect(hidden.attr('type')).to.be.equal('hidden')
 						expect(hidden.attr('name')).to.be.equal('hidden_field')
 						expect(hidden.attr('value')).to.be.equal('hide this')
 					})
 
-					var hidden = controls.field(fields[4],{
-						'hidden_field' : 'this is data'
-					})
 					it('should use data to initialize input overriding default',function() {
+						var hidden = controls.field(fields[4],{
+							'hidden_field' : 'this is data'
+						})
+
 						expect(hidden.attr('value')).to.be.equal('this is data')
 					})
 				})
