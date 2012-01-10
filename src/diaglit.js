@@ -137,10 +137,11 @@
 	}
 
 	// input generator
-	function input(control){
+	function input(control,data){
+		control['value'] = data && data[control.name] || control['value'];
 		return $('<input>')
 			.attr(_(control).extend({
-				id: control.name
+				'id': control.name
 			})).css('height','auto');  // ??? fix ???
 	}
 
