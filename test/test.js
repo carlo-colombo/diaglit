@@ -28,6 +28,19 @@ ender.domReady(function(){
 								"min":1,
 								"value": 1
 							}			]
+					},
+					"tab2":{
+						"label":"Tab 2",
+						"fields":[
+							{
+								"name":"select",
+								"type":"select",
+								"options":[
+									"option 1",
+									"option 2"
+								]
+							}
+						]
 					}
 				},
 				"title": "Properties"
