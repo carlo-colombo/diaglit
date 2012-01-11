@@ -77,7 +77,7 @@
 				d.modal('hide')
 			})
 			if(options['onSubmit']){
-				d.find('.btn.save', options['onSubmit'])
+				d.find('.btn.save').bind('click',options['onSubmit'])
 				if(options['hideOnSubmit']){
 					d.modal('close')
 				}
