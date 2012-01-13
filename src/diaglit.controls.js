@@ -60,7 +60,6 @@ function(name, context, definition) {
 
 	// field generator
 
-
 	function field(makeInput) {
 		return function(control, data) {
 			var label = control.label ||
@@ -78,7 +77,6 @@ function(name, context, definition) {
 	}
 
 	// input generator
-
 
 	function input(control, data) {
 		control['value'] = data && data[control.name] || control['value'];
@@ -106,7 +104,6 @@ function(name, context, definition) {
 			},
 		}
 	})
-
 
 	return _controls
 })
