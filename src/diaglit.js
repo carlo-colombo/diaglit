@@ -1,13 +1,14 @@
 /**
  *
  */
-!function (name, context, definition) {
-  if (typeof module !== 'undefined') module.exports = definition(ender);
-  else if (typeof define === 'function' && typeof define.amd  === 'object') define(ender);
-  else context[name] = definition(ender);
-}('diaglit', this, function ($) {
-	return function(dialog, options){
-	
+!
+function(name, context, definition) {
+	if (typeof module !== 'undefined') module.exports = definition(ender);
+	else if (typeof define === 'function' && typeof define.amd === 'object') define(ender);
+	else context[name] = definition(ender);
+}('diaglit', this, function($) {
+	return function(dialog, options) {
+
 		var _ = require('underscore'),
 			controls = require('diaglit.controls'),
 			_diaglit = {},
@@ -16,19 +17,18 @@
 					<a href="<%= href %>"><%= label %></a>\
 				</li>\
 			') //li template definition
-
-		if(_.isFunction(options)){
+		if (_.isFunction(options)) {
 			options = {
 				'onSubmit': options
 			}
 		}
 		options = _.defaults(options || {}, {
-			appendTo : 'body',
+			appendTo: 'body',
 			'data': {}
 		})
 
 		//dialog skeleton
-		_diaglit.$dialog  = $(_.template('\
+		_diaglit.$dialog = $(_.template('\
 			<div id="<%= id %>" title="<%= title %>" class="modal">\
 				<div class="modal-header">\
 		            <a href="#" class="close">x</a>\
@@ -43,49 +43,43 @@
 		            <a href="#" class="btn primary save">Save</a>\
 		         </div>\
 			</div>\
-		',{
-			id: _.uniqueId('dialog_'+dialog.title.replace(' ','')),
-			title: dialog.title,			
-		}))
-		.hide()
-		.appendTo(options.appendTo)
-		.modal({
-			backdrop:true
+		', {
+			id: _.uniqueId('dialog_' + dialog.title.replace(' ', '')),
+			title: dialog.title,
+		})).hide().appendTo(options.appendTo).modal({
+			backdrop: true
 		})
 
 		//tabs and fieldset appending
-		_(dialog.tabs).map(function(v,k){
+		_(dialog.tabs).map(function(v, k) {
 			//iterate through tabs and generate <li> and <fieldset>
 			var tabId = _.uniqueId(k)
 			return [
-				$(li({
-					href: '#'+tabId,
-					label: v.label || k
-				})),
-				_.reduce(v.fields,function($fieldset, field){
-					//generate fields and append to field
-					return $fieldset.append(controls.field(field,options['data']))
-				},$('<fieldset>').attr({
-					'id':tabId,
-					'class':'tab-pane'
-				}))
-			]
-		}).reduce(function(memo,tab){ // [(li,fieldset),(li,fieldset),...]
-			$(memo[0]).append(tab[0]);//ul += li
-			$(memo[1]).append(tab[1]);//form += fieldset
+			$(li({
+				href: '#' + tabId,
+				label: v.label || k
+			})), _.reduce(v.fields, function($fieldset, field) {
+				//generate fields and append to field
+				return $fieldset.append(controls.field(field, options['data']))
+			}, $('<fieldset>').attr({
+				'id': tabId,
+				'class': 'tab-pane'
+			}))]
+		}).reduce(function(memo, tab) { // [(li,fieldset),(li,fieldset),...]
+			$(memo[0]).append(tab[0]); //ul += li
+			$(memo[1]).append(tab[1]); //form += fieldset
 			return memo
-		},_diaglit.$dialog.find('ul,form'));//memo
-					
+		}, _diaglit.$dialog.find('ul,form')); //memo
 
-		(function(d){
+		(function(d) {
 			d.find('li:nth-child(1),fieldset:nth-child(1)').addClass('active')
-			d.find('.btn.cancel').bind('click',function(e){
+			d.find('.btn.cancel').bind('click', function(e) {
 				e.stop()
 				d.modal('hide')
 			})
-			if(options['onSubmit']){
-				d.find('.btn.save').bind('click',options['onSubmit'])
-				if(options['hideOnSubmit']){
+			if (options['onSubmit']) {
+				d.find('.btn.save').bind('click', options['onSubmit'])
+				if (options['hideOnSubmit']) {
 					d.modal('close')
 				}
 			}
