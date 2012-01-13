@@ -19,12 +19,12 @@
 
 		if(_.isFunction(options)){
 			options = {
-				'onSubmit': options,
-				'data': {}
+				'onSubmit': options
 			}
 		}
 		options = _.defaults(options || {}, {
-			appendTo : 'body'
+			appendTo : 'body',
+			'data': {}
 		})
 
 		//dialog skeleton
