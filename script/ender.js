@@ -2124,197 +2124,6 @@
   var module = { exports: {} }, exports = module.exports;
 
   /*!
-    * Bowser - a browser detector
-    * https://github.com/ded/bowser
-    * MIT License | (c) Dustin Diaz 2011
-    */
-  !function (name, definition) {
-    if (typeof define == 'function') define(definition)
-    else if (typeof module != 'undefined' && module.exports) module.exports['browser'] = definition()
-    else this[name] = definition()
-  }('bowser', function () {
-    /**
-      * navigator.userAgent =>
-      * Chrome:  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_7) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.57 Safari/534.24"
-      * Opera:   "Opera/9.80 (Macintosh; Intel Mac OS X 10.6.7; U; en) Presto/2.7.62 Version/11.01"
-      * Safari:  "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1"
-      * IE:      "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)"
-      * Firefox: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0) Gecko/20100101 Firefox/4.0"
-      * iPhone:  "Mozilla/5.0 (iPhone Simulator; U; CPU iPhone OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5"
-      * iPad:    "Mozilla/5.0 (iPad; U; CPU OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5", 
-      * Android: "Mozilla/5.0 (Linux; U; Android 2.3.4; en-us; T-Mobile G2 Build/GRJ22) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"
-      */
-  
-    var ua = navigator.userAgent
-      , t = true
-      , ie = /msie/i.test(ua)
-      , chrome = /chrome/i.test(ua)
-      , safari = /safari/i.test(ua) && !chrome
-      , iphone = /iphone/i.test(ua)
-      , ipad = /ipad/i.test(ua)
-      , android = /android/i.test(ua)
-      , opera = /opera/i.test(ua)
-      , firefox = /firefox/i.test(ua)
-      , gecko = /gecko\//i.test(ua)
-      , webkitVersion = /version\/(\d+(\.\d+)?)/i
-  
-    function detect() {
-  
-      if (ie) return {
-          msie: t
-        , version: ua.match(/msie (\d+(\.\d+)?);/i)[1]
-      }
-      if (chrome) return {
-          webkit: t
-        , chrome: t
-        , version: ua.match(/chrome\/(\d+(\.\d+)?)/i)[1]
-      }
-      if (iphone) return {
-          webkit: t
-        , iphone: t
-        , mobile: t
-        , ios: t
-        , version: ua.match(webkitVersion)[1]
-      }
-      if (ipad) return {
-          webkit: t
-        , ipad: t
-        , mobile: t
-        , ios: t
-        , version: ua.match(webkitVersion)[1]
-      }
-      if (android) return {
-          webkit: t
-        , android: t
-        , mobile: t
-        , version: ua.match(webkitVersion)[1]
-      }
-      if (safari) return {
-          webkit: t
-        , safari: t
-        , version: ua.match(webkitVersion)[1]
-      }
-      if (opera) return {
-          opera: t
-        , version: ua.match(webkitVersion)[1]
-      }
-      if (gecko) {
-        var o = {
-            gecko: t
-          , mozilla: t
-          , version: ua.match(/firefox\/(\d+(\.\d+)?)/i)[1]
-        }
-        if (firefox) o.firefox = t
-        return o
-      }
-  
-    }
-  
-    var bowser = detect()
-  
-    // Graded Browser Support
-    // http://developer.yahoo.com/yui/articles/gbs
-    if ((bowser.msie && bowser.version >= 6) ||
-        (bowser.chrome && bowser.version >= 10) ||
-        (bowser.firefox && bowser.version >= 4.0) ||
-        (bowser.safari && bowser.version >= 5) ||
-        (bowser.opera && bowser.version >= 10.0)) {
-      bowser.a = t;
-    }
-  
-    else if ((bowser.msie && bowser.version < 6) ||
-        (bowser.chrome && bowser.version < 10) ||
-        (bowser.firefox && bowser.version < 4.0) ||
-        (bowser.safari && bowser.version < 5) ||
-        (bowser.opera && bowser.version < 10.0)) {
-      bowser.c = t
-    } else bowser.x = t
-  
-    return bowser
-  })
-  
-
-  provide("bowser", module.exports);
-
-  $.ender(module.exports);
-
-}();
-
-!function () {
-
-  var module = { exports: {} }, exports = module.exports;
-
-  !function (name, definition) {
-    if (typeof define == 'function') define(definition)
-    else if (typeof module != 'undefined') module.exports = definition()
-    else this[name] = this['domReady'] = definition()
-  }('domready', function (ready) {
-  
-    var fns = [], fn, f = false
-      , doc = document
-      , testEl = doc.documentElement
-      , hack = testEl.doScroll
-      , domContentLoaded = 'DOMContentLoaded'
-      , addEventListener = 'addEventListener'
-      , onreadystatechange = 'onreadystatechange'
-      , loaded = /^loade|c/.test(doc.readyState)
-  
-    function flush(f) {
-      loaded = 1
-      while (f = fns.shift()) f()
-    }
-  
-    doc[addEventListener] && doc[addEventListener](domContentLoaded, fn = function () {
-      doc.removeEventListener(domContentLoaded, fn, f)
-      flush()
-    }, f)
-  
-  
-    hack && doc.attachEvent(onreadystatechange, (fn = function () {
-      if (/^c/.test(doc.readyState)) {
-        doc.detachEvent(onreadystatechange, fn)
-        flush()
-      }
-    }))
-  
-    return (ready = hack ?
-      function (fn) {
-        self != top ?
-          loaded ? fn() : fns.push(fn) :
-          function () {
-            try {
-              testEl.doScroll('left')
-            } catch (e) {
-              return setTimeout(function() { ready(fn) }, 50)
-            }
-            fn()
-          }()
-      } :
-      function (fn) {
-        loaded ? fn() : fns.push(fn)
-      })
-  })
-
-  provide("domready", module.exports);
-
-  !function ($) {
-    var ready = require('domready')
-    $.ender({domReady: ready})
-    $.ender({
-      ready: function (f) {
-        ready(f)
-        return this
-      }
-    }, true)
-  }(ender);
-
-}();
-
-!function () {
-
-  var module = { exports: {} }, exports = module.exports;
-
-  /*!
     * Bonzo: DOM Utility (c) Dustin Diaz 2011
     * https://github.com/ded/bonzo
     * License MIT
@@ -3224,6 +3033,311 @@
   
   }(ender);
   
+
+}();
+
+!function () {
+
+  var module = { exports: {} }, exports = module.exports;
+
+  !function(name, context, definition) {
+  	if (typeof module !== 'undefined') module.exports = definition(ender);
+  	else if (typeof define === 'function' && typeof define.amd === 'object') define(ender);
+  	else context[name] = definition(ender);
+  }('diaglit.controls', this, function($) {
+  	var _controls = {},
+  		_ = require('underscore'),
+  		control_tpl = _.template('\
+  			<div class="clearfix">\
+  				<label for="<%= name %>"><%= label %></label>\
+  				<div class="input">\
+  					<% if(help) { %>\
+  						<span class="help-block"><%= help %></span>\
+  					<% } %>\
+  				</div>\
+  			</div>')
+  
+  		//export control type
+  		_.each(['text', 'time', 'date', 'datetime', 'password', 'email', 'range', 'number'], function(ctrl) {
+  			_controls[ctrl] = field(input);
+  		});
+  
+  	//textarea control	
+  	_controls['textarea'] = field(function(control, data) {
+  		var prop = _.extend(control, {
+  			id: control.name
+  		});
+  
+  		return $('<textarea>').attr(prop).text(data && data[control.name] || control.value);
+  	});
+  
+  	//input type hidden doesn't need field
+  	_controls['hidden'] = input;
+  
+  	//select option field
+  	_controls['select'] = field(function(control, data) {
+  		var t_opt = _.template('<option <%=selected%> value="<%=value %>" ><%=label%></option>'),
+  			prop = _(control).clone();
+  
+  		//removing options from select properties
+  		delete prop['options']
+  
+  		return _(control.options).map(function(opt) {
+  			if (_.isString(opt)) {
+  				opt = {
+  					'value': opt,
+  					'label': opt
+  				}
+  			}
+  			opt['selected'] = data && data[control.name] == opt['value'] || !! opt['selected'] ? 'selected' : '';
+  			return t_opt(opt)
+  		}).reduce(function(select, opt) {
+  			return select.append(opt)
+  		}, $('<select>').attr(prop))
+  	})
+  
+  	// field generator
+  
+  	function field(makeInput) {
+  		return function(control, data) {
+  			var label = control.label ||
+  			function(name) {
+  				return name.charAt(0).toUpperCase() + name.substring(1).replace('_', ' ');
+  			}, _field = $(control_tpl({
+  				name: control.name,
+  				label: _.isFunction(label) ? label(control.name) : label,
+  				help: control.help
+  			}))
+  			_field.find('.input').prepend(makeInput(control, data))
+  
+  			return _field
+  		}
+  	}
+  
+  	// input generator
+  
+  	function input(control, data) {
+  		control['value'] = data && data[control.name] || control['value'];
+  		return $('<input>').attr(_(control).extend({
+  			'id': control.name
+  		})).css('height', 'auto'); // ??? fix ???
+  	}
+  
+  	_controls['NotImplementedException'] = function(type) {
+  		this.message = type + " is not implemented"
+  	}
+  	_controls['NotImplementedException'].prototype = new Error()
+  	_controls['NotImplementedException'].prototype.name = 'NotImplementedException'
+  
+  	Object.defineProperties(_controls, {
+  		'field': {
+  			enumerable: false,
+  			value: function(field, data) {
+  				if ( !! field.type && !_controls[field.type]) {
+  					throw new _controls['NotImplementedException'](field.type)
+  				}
+  				return _controls[field.type || 'text'](_(field).defaults({
+  					type: 'text'
+  				}), data)
+  			},
+  		}
+  	})
+  
+  	return _controls
+  })
+
+  provide("diaglit.controls", module.exports);
+
+}();
+
+!function () {
+
+  var module = { exports: {} }, exports = module.exports;
+
+  /*!
+    * Bowser - a browser detector
+    * https://github.com/ded/bowser
+    * MIT License | (c) Dustin Diaz 2011
+    */
+  !function (name, definition) {
+    if (typeof define == 'function') define(definition)
+    else if (typeof module != 'undefined' && module.exports) module.exports['browser'] = definition()
+    else this[name] = definition()
+  }('bowser', function () {
+    /**
+      * navigator.userAgent =>
+      * Chrome:  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_7) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.57 Safari/534.24"
+      * Opera:   "Opera/9.80 (Macintosh; Intel Mac OS X 10.6.7; U; en) Presto/2.7.62 Version/11.01"
+      * Safari:  "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_7; en-us) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1"
+      * IE:      "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C)"
+      * Firefox: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:2.0) Gecko/20100101 Firefox/4.0"
+      * iPhone:  "Mozilla/5.0 (iPhone Simulator; U; CPU iPhone OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5"
+      * iPad:    "Mozilla/5.0 (iPad; U; CPU OS 4_3_2 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8H7 Safari/6533.18.5", 
+      * Android: "Mozilla/5.0 (Linux; U; Android 2.3.4; en-us; T-Mobile G2 Build/GRJ22) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1"
+      */
+  
+    var ua = navigator.userAgent
+      , t = true
+      , ie = /msie/i.test(ua)
+      , chrome = /chrome/i.test(ua)
+      , safari = /safari/i.test(ua) && !chrome
+      , iphone = /iphone/i.test(ua)
+      , ipad = /ipad/i.test(ua)
+      , android = /android/i.test(ua)
+      , opera = /opera/i.test(ua)
+      , firefox = /firefox/i.test(ua)
+      , gecko = /gecko\//i.test(ua)
+      , webkitVersion = /version\/(\d+(\.\d+)?)/i
+  
+    function detect() {
+  
+      if (ie) return {
+          msie: t
+        , version: ua.match(/msie (\d+(\.\d+)?);/i)[1]
+      }
+      if (chrome) return {
+          webkit: t
+        , chrome: t
+        , version: ua.match(/chrome\/(\d+(\.\d+)?)/i)[1]
+      }
+      if (iphone) return {
+          webkit: t
+        , iphone: t
+        , mobile: t
+        , ios: t
+        , version: ua.match(webkitVersion)[1]
+      }
+      if (ipad) return {
+          webkit: t
+        , ipad: t
+        , mobile: t
+        , ios: t
+        , version: ua.match(webkitVersion)[1]
+      }
+      if (android) return {
+          webkit: t
+        , android: t
+        , mobile: t
+        , version: ua.match(webkitVersion)[1]
+      }
+      if (safari) return {
+          webkit: t
+        , safari: t
+        , version: ua.match(webkitVersion)[1]
+      }
+      if (opera) return {
+          opera: t
+        , version: ua.match(webkitVersion)[1]
+      }
+      if (gecko) {
+        var o = {
+            gecko: t
+          , mozilla: t
+          , version: ua.match(/firefox\/(\d+(\.\d+)?)/i)[1]
+        }
+        if (firefox) o.firefox = t
+        return o
+      }
+  
+    }
+  
+    var bowser = detect()
+  
+    // Graded Browser Support
+    // http://developer.yahoo.com/yui/articles/gbs
+    if ((bowser.msie && bowser.version >= 6) ||
+        (bowser.chrome && bowser.version >= 10) ||
+        (bowser.firefox && bowser.version >= 4.0) ||
+        (bowser.safari && bowser.version >= 5) ||
+        (bowser.opera && bowser.version >= 10.0)) {
+      bowser.a = t;
+    }
+  
+    else if ((bowser.msie && bowser.version < 6) ||
+        (bowser.chrome && bowser.version < 10) ||
+        (bowser.firefox && bowser.version < 4.0) ||
+        (bowser.safari && bowser.version < 5) ||
+        (bowser.opera && bowser.version < 10.0)) {
+      bowser.c = t
+    } else bowser.x = t
+  
+    return bowser
+  })
+  
+
+  provide("bowser", module.exports);
+
+  $.ender(module.exports);
+
+}();
+
+!function () {
+
+  var module = { exports: {} }, exports = module.exports;
+
+  !function (name, definition) {
+    if (typeof define == 'function') define(definition)
+    else if (typeof module != 'undefined') module.exports = definition()
+    else this[name] = this['domReady'] = definition()
+  }('domready', function (ready) {
+  
+    var fns = [], fn, f = false
+      , doc = document
+      , testEl = doc.documentElement
+      , hack = testEl.doScroll
+      , domContentLoaded = 'DOMContentLoaded'
+      , addEventListener = 'addEventListener'
+      , onreadystatechange = 'onreadystatechange'
+      , loaded = /^loade|c/.test(doc.readyState)
+  
+    function flush(f) {
+      loaded = 1
+      while (f = fns.shift()) f()
+    }
+  
+    doc[addEventListener] && doc[addEventListener](domContentLoaded, fn = function () {
+      doc.removeEventListener(domContentLoaded, fn, f)
+      flush()
+    }, f)
+  
+  
+    hack && doc.attachEvent(onreadystatechange, (fn = function () {
+      if (/^c/.test(doc.readyState)) {
+        doc.detachEvent(onreadystatechange, fn)
+        flush()
+      }
+    }))
+  
+    return (ready = hack ?
+      function (fn) {
+        self != top ?
+          loaded ? fn() : fns.push(fn) :
+          function () {
+            try {
+              testEl.doScroll('left')
+            } catch (e) {
+              return setTimeout(function() { ready(fn) }, 50)
+            }
+            fn()
+          }()
+      } :
+      function (fn) {
+        loaded ? fn() : fns.push(fn)
+      })
+  })
+
+  provide("domready", module.exports);
+
+  !function ($) {
+    var ready = require('domready')
+    $.ender({domReady: ready})
+    $.ender({
+      ready: function (f) {
+        ready(f)
+        return this
+      }
+    }, true)
+  }(ender);
 
 }();
 
@@ -4491,10 +4605,11 @@
 
   var module = { exports: {} }, exports = module.exports;
 
-  /**
-   *
-   */
-  provide('diaglit', this, function($) {
+  !function(name, context, definition) {
+  	if (typeof module !== 'undefined') module.exports = definition(ender);
+  	else if (typeof define === 'function' && typeof define.amd === 'object') define(ender);
+  	else context[name] = definition(ender);
+  }('diaglit', this, function($) {
   	return function(dialog, options) {
   
   		var _ = require('underscore'),
@@ -4576,111 +4691,6 @@
   		return _diaglit;
   	}
   });
-  
-  /**
-   *
-   */
-  provide('diaglit.controls', this, function($) {
-  	var _controls = {},
-  		_ = require('underscore'),
-  		control_tpl = _.template('\
-  			<div class="clearfix">\
-  				<label for="<%= name %>"><%= label %></label>\
-  				<div class="input">\
-  					<% if(help) { %>\
-  						<span class="help-block"><%= help %></span>\
-  					<% } %>\
-  				</div>\
-  			</div>')
-  
-  		//export control type
-  		_.each(['text', 'time', 'date', 'datetime', 'password', 'email', 'range', 'number'], function(ctrl) {
-  			_controls[ctrl] = field(input);
-  		});
-  
-  	//textarea control	
-  	_controls['textarea'] = field(function(control, data) {
-  		var prop = _.extend(control, {
-  			id: control.name
-  		});
-  
-  		return $('<textarea>').attr(prop).text(data && data[control.name] || control.value);
-  	});
-  
-  	//input type hidden doesn't need field
-  	_controls['hidden'] = input;
-  
-  	//select option field
-  	_controls['select'] = field(function(control, data) {
-  		var t_opt = _.template('<option <%=selected%> value="<%=value %>" ><%=label%></option>'),
-  			prop = _(control).clone();
-  
-  		//removing options from select properties
-  		delete prop['options']
-  
-  		return _(control.options).map(function(opt) {
-  			if (_.isString(opt)) {
-  				opt = {
-  					'value': opt,
-  					'label': opt
-  				}
-  			}
-  			opt['selected'] = data && data[control.name] == opt['value'] || !! opt['selected'] ? 'selected' : '';
-  			return t_opt(opt)
-  		}).reduce(function(select, opt) {
-  			return select.append(opt)
-  		}, $('<select>').attr(prop))
-  	})
-  
-  	// field generator
-  
-  	function field(makeInput) {
-  		return function(control, data) {
-  			var label = control.label ||
-  			function(name) {
-  				return name.charAt(0).toUpperCase() + name.substring(1).replace('_', ' ');
-  			}, _field = $(control_tpl({
-  				name: control.name,
-  				label: _.isFunction(label) ? label(control.name) : label,
-  				help: control.help
-  			}))
-  			_field.find('.input').prepend(makeInput(control, data))
-  
-  			return _field
-  		}
-  	}
-  
-  	// input generator
-  
-  	function input(control, data) {
-  		control['value'] = data && data[control.name] || control['value'];
-  		return $('<input>').attr(_(control).extend({
-  			'id': control.name
-  		})).css('height', 'auto'); // ??? fix ???
-  	}
-  
-  	_controls['NotImplementedException'] = function(type) {
-  		this.message = type + " is not implemented"
-  	}
-  	_controls['NotImplementedException'].prototype = new Error()
-  	_controls['NotImplementedException'].prototype.name = 'NotImplementedException'
-  
-  	Object.defineProperties(_controls, {
-  		'field': {
-  			enumerable: false,
-  			value: function(field, data) {
-  				if ( !! field.type && !_controls[field.type]) {
-  					throw new _controls['NotImplementedException'](field.type)
-  				}
-  				return _controls[field.type || 'text'](_(field).defaults({
-  					type: 'text'
-  				}), data)
-  			},
-  		}
-  	})
-  
-  	return _controls
-  })
 
   provide("diaglit", module.exports);
 
