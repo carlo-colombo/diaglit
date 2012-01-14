@@ -669,7 +669,7 @@
 
   var module = { exports: {} }, exports = module.exports;
 
-  //     Underscore.js 1.2.4
+  //     Underscore.js 1.3.0
   //     (c) 2009-2012 Jeremy Ashkenas, DocumentCloud Inc.
   //     Underscore is freely distributable under the MIT license.
   //     Portions of Underscore are inspired or borrowed from Prototype,
@@ -719,26 +719,21 @@
     // Create a safe reference to the Underscore object for use below.
     var _ = function(obj) { return new wrapper(obj); };
   
-    // Export the Underscore object for **Node.js** and **"CommonJS"**, with
-    // backwards-compatibility for the old `require()` API. If we're not in
-    // CommonJS, add `_` to the global object.
+    // Export the Underscore object for **Node.js**, with
+    // backwards-compatibility for the old `require()` API. If we're in
+    // the browser, add `_` as a global object via a string identifier,
+    // for Closure Compiler "advanced" mode.
     if (typeof exports !== 'undefined') {
       if (typeof module !== 'undefined' && module.exports) {
         exports = module.exports = _;
       }
       exports._ = _;
-    } else if (typeof define === 'function' && define.amd) {
-      // Register as a named module with AMD.
-      define('underscore', function() {
-        return _;
-      });
     } else {
-      // Exported as a string, for Closure Compiler "advanced" mode.
       root['_'] = _;
     }
   
     // Current version.
-    _.VERSION = '1.2.4';
+    _.VERSION = '1.3.0';
   
     // Collection Functions
     // --------------------
@@ -1740,7 +1735,8 @@
       g: function (k) {
         return this.c[k] || undefined
       }
-    , s: function (k, v) {
+    , s: function (k, v, r) {
+        v = r ? new RegExp(v) : v
         return (this.c[k] = v)
       }
     }
@@ -1751,7 +1747,7 @@
       , tokenCache = new cache()
   
     function classRegex(c) {
-      return classCache.g(c) || classCache.s(c, new RegExp('(^|\\s+)' + c + '(\\s+|$)'))
+      return classCache.g(c) || classCache.s(c, '(^|\\s+)' + c + '(\\s+|$)', 1)
     }
   
     // not quite as fast as inline loops in older browsers so don't use liberally
@@ -1820,15 +1816,15 @@
       case '=':
         return actual == val
       case '^=':
-        return actual.match(attrCache.g('^=' + val) || attrCache.s('^=' + val, new RegExp('^' + clean(val))))
+        return actual.match(attrCache.g('^=' + val) || attrCache.s('^=' + val, '^' + clean(val), 1))
       case '$=':
-        return actual.match(attrCache.g('$=' + val) || attrCache.s('$=' + val, new RegExp(clean(val) + '$')))
+        return actual.match(attrCache.g('$=' + val) || attrCache.s('$=' + val, clean(val) + '$', 1))
       case '*=':
-        return actual.match(attrCache.g(val) || attrCache.s(val, new RegExp(clean(val))))
+        return actual.match(attrCache.g(val) || attrCache.s(val, clean(val), 1))
       case '~=':
-        return actual.match(attrCache.g('~=' + val) || attrCache.s('~=' + val, new RegExp('(?:^|\\s+)' + clean(val) + '(?:\\s+|$)')))
+        return actual.match(attrCache.g('~=' + val) || attrCache.s('~=' + val, '(?:^|\\s+)' + clean(val) + '(?:\\s+|$)', 1))
       case '|=':
-        return actual.match(attrCache.g('|=' + val) || attrCache.s('|=' + val, new RegExp('^' + clean(val) + '(-|$)')))
+        return actual.match(attrCache.g('|=' + val) || attrCache.s('|=' + val, '^' + clean(val) + '(-|$)', 1))
       }
       return 0
     }
@@ -1889,7 +1885,7 @@
       // recursively work backwards through the tokens and up the dom, covering all options
       function crawl(e, i, p) {
         while (p = walker[dividedTokens[i]](p, e)) {
-          if (isNode(p) && (found = interpret.apply(p, q(tokens[i])))) {
+          if (isNode(p) && (interpret.apply(p, q(tokens[i])))) {
             if (i) {
               if (cand = crawl(p, i - 1, p)) return cand
             } else return p
@@ -1906,11 +1902,7 @@
     function uniq(ar) {
       var a = [], i, j
       o: for (i = 0; i < ar.length; ++i) {
-        for (j = 0; j < a.length; ++j) {
-          if (a[j] == ar[i]) {
-            continue o
-          }
-        }
+        for (j = 0; j < a.length; ++j) if (a[j] == ar[i]) continue o
         a[a.length] = ar[i]
       }
       return a
@@ -4502,13 +4494,9 @@
   /**
    *
    */
-  !function (name, context, definition) {
-    if (typeof module !== 'undefined') module.exports = definition(name, context);
-    else if (typeof define === 'function' && typeof define.amd  === 'object') define(definition);
-    else context[name] = definition(ender);
-  }('diaglit', this, function ($) {
-  	return function(dialog, options){
-  	
+  provide('diaglit', this, function($) {
+  	return function(dialog, options) {
+  
   		var _ = require('underscore'),
   			controls = require('diaglit.controls'),
   			_diaglit = {},
@@ -4517,19 +4505,18 @@
   					<a href="<%= href %>"><%= label %></a>\
   				</li>\
   			') //li template definition
-  
-  		if(_.isFunction(options)){
+  		if (_.isFunction(options)) {
   			options = {
-  				'onSubmit': options,
-  				'data': {}
+  				'onSubmit': options
   			}
   		}
   		options = _.defaults(options || {}, {
-  			appendTo : 'body'
+  			appendTo: 'body',
+  			'data': {}
   		})
   
   		//dialog skeleton
-  		_diaglit.$dialog  = $(_.template('\
+  		_diaglit.$dialog = $(_.template('\
   			<div id="<%= id %>" title="<%= title %>" class="modal">\
   				<div class="modal-header">\
   		            <a href="#" class="close">x</a>\
@@ -4544,42 +4531,43 @@
   		            <a href="#" class="btn primary save">Save</a>\
   		         </div>\
   			</div>\
-  		',{
-  			id: _.uniqueId('dialog_'+dialog.title.replace(' ','')),
-  			title: dialog.title,			
-  		}))
-  		.hide()
-  		.appendTo(options.appendTo)
-  		.modal({
-  			backdrop:true
+  		', {
+  			id: _.uniqueId('dialog_' + dialog.title.replace(' ', '')),
+  			title: dialog.title,
+  		})).hide().appendTo(options.appendTo).modal({
+  			backdrop: true
   		})
   
   		//tabs and fieldset appending
-  		_(dialog.tabs).map(function(v,k){
+  		_(dialog.tabs).map(function(v, k) {
+  			//iterate through tabs and generate <li> and <fieldset>
+  			var tabId = _.uniqueId(k)
   			return [
-  				$(li({
-  					href: '#'+k,
-  					label: v.label || k
-  				})),
-  				_.reduce(v.fields,function($fieldset, field){
-  					return $fieldset.append(controls.field(field,options['data']))
-  				},$('<fieldset>'))
-  			]
-  		}).reduce(function(memo,tab){
-  			return _(memo).each(function(v,i){
-  				$(v).append(tab[i])
-  			})
-  		},_diaglit.$dialog.find('ul,form'));
+  			$(li({
+  				href: '#' + tabId,
+  				label: v.label || k
+  			})), _.reduce(v.fields, function($fieldset, field) {
+  				//generate fields and append to field
+  				return $fieldset.append(controls.field(field, options['data']))
+  			}, $('<fieldset>').attr({
+  				'id': tabId,
+  				'class': 'tab-pane'
+  			}))]
+  		}).reduce(function(memo, tab) { // [(li,fieldset),(li,fieldset),...]
+  			$(memo[0]).append(tab[0]); //ul += li
+  			$(memo[1]).append(tab[1]); //form += fieldset
+  			return memo
+  		}, _diaglit.$dialog.find('ul,form')); //memo
   
-  		(function(d){
+  		(function(d) {
   			d.find('li:nth-child(1),fieldset:nth-child(1)').addClass('active')
-  			d.find('.btn.cancel').bind('click',function(e){
+  			d.find('.btn.cancel').bind('click', function(e) {
   				e.stop()
   				d.modal('hide')
   			})
-  			if(options['onSubmit']){
-  				d.find('.btn.save').bind('click',options['onSubmit'])
-  				if(options['hideOnSubmit']){
+  			if (options['onSubmit']) {
+  				d.find('.btn.save').bind('click', options['onSubmit'])
+  				if (options['hideOnSubmit']) {
   					d.modal('close')
   				}
   			}
@@ -4587,14 +4575,13 @@
   
   		return _diaglit;
   	}
-  })
+  });
   
-  !function (name, context, definition) {
-    if (typeof module !== 'undefined') module.exports = definition(name, context);
-    else if (typeof define === 'function' && typeof define.amd  === 'object') define(definition);
-    else context[name] = definition(ender);
-  }('diaglit.controls', this, function ($) {
-  	var _controls ={},
+  /**
+   *
+   */
+  provide('diaglit.controls', this, function($) {
+  	var _controls = {},
   		_ = require('underscore'),
   		control_tpl = _.template('\
   			<div class="clearfix">\
@@ -4606,101 +4593,95 @@
   				</div>\
   			</div>')
   
-  	//export control type
-  	_.each(['text','time','date','datetime', 'password', 'email','range','number'],function(ctrl){
-  		_controls[ctrl] = field(input);
-  	});
+  		//export control type
+  		_.each(['text', 'time', 'date', 'datetime', 'password', 'email', 'range', 'number'], function(ctrl) {
+  			_controls[ctrl] = field(input);
+  		});
   
   	//textarea control	
-  	_controls['textarea'] = field(function(control,data){
-  		var prop = _.extend(control,{
+  	_controls['textarea'] = field(function(control, data) {
+  		var prop = _.extend(control, {
   			id: control.name
   		});
   
-  		return $('<textarea>')
-  			.attr(prop)
-  			.text(data && data[control.name] || control.value);
+  		return $('<textarea>').attr(prop).text(data && data[control.name] || control.value);
   	});
   
   	//input type hidden doesn't need field
   	_controls['hidden'] = input;
   
   	//select option field
-  	_controls['select'] = field(function(control,data){
+  	_controls['select'] = field(function(control, data) {
   		var t_opt = _.template('<option <%=selected%> value="<%=value %>" ><%=label%></option>'),
   			prop = _(control).clone();
   
   		//removing options from select properties
   		delete prop['options']
   
-  		return _(control.options).map(function(opt){
-  			if(_.isString(opt)){
+  		return _(control.options).map(function(opt) {
+  			if (_.isString(opt)) {
   				opt = {
-  					'value':opt,
-  					'label':opt
+  					'value': opt,
+  					'label': opt
   				}
   			}
-  			opt['selected'] = data 
-  				&& data[control.name]==opt['value'] 
-  				|| !!opt['selected'] ? 'selected' : '';
-  			return t_opt(opt)	
-  		}).reduce(function(select,opt){
+  			opt['selected'] = data && data[control.name] == opt['value'] || !! opt['selected'] ? 'selected' : '';
+  			return t_opt(opt)
+  		}).reduce(function(select, opt) {
   			return select.append(opt)
-  		},$('<select>').attr(prop))
+  		}, $('<select>').attr(prop))
   	})
   
   	// field generator
-  	function field (makeInput) {
-  		return function(control,data){
-  			var label = control.label || function(name){
-  					return name.charAt(0).toUpperCase()
-  						+ name.substring(1).replace('_',' ');
-  				},
-  				_field = $(control_tpl({
-  					name : control.name,
-  					label: _.isFunction(label) ? label(control.name) : label,
-  					help : control.help
-  				}))
-  				_field.find('.input')
-  				.prepend(makeInput(control,data))
   
-  			return _field 
+  	function field(makeInput) {
+  		return function(control, data) {
+  			var label = control.label ||
+  			function(name) {
+  				return name.charAt(0).toUpperCase() + name.substring(1).replace('_', ' ');
+  			}, _field = $(control_tpl({
+  				name: control.name,
+  				label: _.isFunction(label) ? label(control.name) : label,
+  				help: control.help
+  			}))
+  			_field.find('.input').prepend(makeInput(control, data))
+  
+  			return _field
   		}
   	}
   
   	// input generator
-  	function input(control,data){
+  
+  	function input(control, data) {
   		control['value'] = data && data[control.name] || control['value'];
-  		return $('<input>')
-  			.attr(_(control).extend({
-  				'id': control.name
-  			})).css('height','auto');  // ??? fix ???
+  		return $('<input>').attr(_(control).extend({
+  			'id': control.name
+  		})).css('height', 'auto'); // ??? fix ???
   	}
   
-  	_controls['NotImplementedException'] = function(type){this.message = type + " is not implemented"}
+  	_controls['NotImplementedException'] = function(type) {
+  		this.message = type + " is not implemented"
+  	}
   	_controls['NotImplementedException'].prototype = new Error()
   	_controls['NotImplementedException'].prototype.name = 'NotImplementedException'
   
-  	Object.defineProperties(_controls,{
-  		'field':{
+  	Object.defineProperties(_controls, {
+  		'field': {
   			enumerable: false,
-  			value : function (field,data){
-  				if (!!field.type && !_controls[field.type]) {
+  			value: function(field, data) {
+  				if ( !! field.type && !_controls[field.type]) {
   					throw new _controls['NotImplementedException'](field.type)
   				}
-  				return _controls[field.type || 'text' ](_(field).defaults({type:'text'}),data)
+  				return _controls[field.type || 'text'](_(field).defaults({
+  					type: 'text'
+  				}), data)
   			},
   		}
   	})
   
-  
-  
   	return _controls
   })
-  
 
   provide("diaglit", module.exports);
-
-  $.ender(module.exports);
 
 }();
