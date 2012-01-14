@@ -1,0 +1,109 @@
+<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+<script src="script/ender.js"></script>
+<script src="script/script.js"></script>
+<style type="text/css">
+.content {
+	margin-top: 80px;
+}
+</style>
+<title>Diaglit examples</title>
+<div class="topbar">
+	<div class="fill">
+		<div class="container">
+			<a class="brand" href="#">Diaglit</a>
+			<ul class="nav">
+				<li class="active">
+					<a href="https://github.com/carlo-colombo/diaglit">Home</a>
+				</li>
+				<li>
+					<a href="https://github.com/carlo-colombo/diaglit/blob/master/README.md">About</a>
+				</li>
+				<li>
+					<a href="#contact">Contact</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="content">
+		<div class="page-header">
+			<h1>
+				Examples
+				<small>Click buttons labeled "Open" to open the matching dialog</small>
+			</h1>
+		</div>
+		<div class="row">
+			<div class="span10">
+				<section>
+					<a href="" class="btn">Open</a>
+					<pre class="dialog-definition">
+{
+	"tabs": {
+		"tab1": {
+			"label": "Tab 1",
+			"fields": [{
+				"name": "title",
+				"type": "text",
+				"placeholder": "Insert name here",
+				"label": "Character name"
+			}, {
+				"name": "characterClass",
+				"type": "text",
+				"label": "class"
+			}, {
+				"name": "level",
+				"type": "number",
+				"max": 30,
+				"min": 1,
+				"value": 1
+			}]
+		},
+		"tab2": {
+			"label": "Tab 2",
+			"fields": [{
+				"name": "select",
+				"type": "select",
+				"options": ["option 1", "option 2"]
+			}]
+		}
+	},
+	"title": "Properties"
+}
+					</pre>
+				</section>
+			</div>
+			<div class="span4">
+				<h3>Controls</h3>
+				<ul>
+					<li>
+						<h4>Minimal configuration</h4>
+						<pre>{"name": "minimal"}</pre>
+					</li>
+					<li>
+						<h4>HTML5 controls</h4>
+						<pre>
+{"name": "date",
+"type":"date"}
+							</pre>
+						<pre>
+{"name": "range",
+"type":"range"}
+							</pre>
+						...
+					</li>
+					<li>
+						<h4>Hidden</h4>
+						<pre>
+{"name": "mrHyde",
+"type":"hidden",
+"value": "hidden value"}
+							</pre>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</div>
+	<footer></footer>
+</div>
