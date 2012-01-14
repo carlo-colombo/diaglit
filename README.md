@@ -1,6 +1,8 @@
 diaglit (Dialog builder based on twitter-bootstrap)
 ===================================================
 
+[Examples](http://carlo-colombo.github/diaglit)
+
 Feature
 -------
 * Multiple tab
@@ -18,6 +20,10 @@ Dependencies
 * [bean](https://github.com/fat/bean)
 * [ender-twitter-bootstrap](http://rvagg.github.com/bootstrap/javascript.html)
 * [underscorejs](http://documentcloud.github.com/underscore)
+
+Ender Build
+-----------
+`#~ ender build diaglit`
 
 Use
 ------------
