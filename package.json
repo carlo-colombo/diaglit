@@ -1,0 +1,13 @@
+{
+    "name": "diaglit"
+  , "description": "Dialog builder by @lit_car, based on twitter bootstrap (unofficial ender port)"
+  , "url": "https://github.com/carlo-colombo/diaglit"
+  , "keywords": ["twitter", "bootstrap", "ender", "dialog", "form"]
+  , "authors": ["Carlo Colombo <@lit_car>"]
+  , "dependencies": {
+       "qwery": "*", "bean": "*", "ender-twitter-bootstrap": "*" , "underscore" : "*"
+    }
+  , "main"          : "src/diaglit.js"
+  , "ender"         : "noop"
+  , "version"       : "0.1.1"
+}
