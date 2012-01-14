@@ -15,8 +15,10 @@
   "dependencies": {
     "qwery": "*",
     "bean": "*",
+    "bonzo":"*",
     "ender-twitter-bootstrap": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "diaglit.controls": "*"
   },
   "main": "src/diaglit.js",
   "ender": "noop",
