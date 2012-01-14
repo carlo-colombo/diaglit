@@ -1,0 +1,26 @@
+{
+  "name": "diaglit.controls",
+  "description": "diaglit controls library",
+  "url": "https://github.com/carlo-colombo/diaglit",
+  "keywords": [
+    "twitter",
+    "bootstrap",
+    "ender",
+    "dialog",
+    "controls"
+  ],
+  "authors": [
+    "Carlo Colombo <@lit_car>"
+  ],
+  "dependencies": {
+    "qwery": "*",
+    "underscore": "*"
+  },
+  "main": "src/diaglit.controls.js",
+  "ender": "noop",
+  "version": "0.1.0",
+  "devDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
