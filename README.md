@@ -1,7 +1,7 @@
 diaglit (Dialog builder based on twitter-bootstrap)
 ===================================================
 
-[Examples](http://carlo-colombo.github/diaglit)
+[Examples](http://carlo-colombo.github.com/diaglit)
 
 Feature
 -------
