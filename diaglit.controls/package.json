@@ -14,11 +14,12 @@
   ],
   "dependencies": {
     "qwery": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "bonzo": "*"
   },
   "main": "src/diaglit.controls.js",
   "ender": "noop",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "devDependencies": {},
   "engines": {
     "node": "*"
