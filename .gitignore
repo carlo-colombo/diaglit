@@ -1,1 +1,3 @@
+lib/node_modules/*
+try/*
 script/node_modules/*
