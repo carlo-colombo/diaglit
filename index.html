@@ -1,13 +1,11 @@
 <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
 <script src="script/ender.js"></script>
 <script src="script/script.js"></script>
-<link href="css/prettify.css" type="text/css" rel="stylesheet" />
 <style type="text/css">
 .content {
 	margin-top: 80px;
 }
 </style>
-<script type="text/javascript" src="script/prettify.js"></script>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -22,38 +20,48 @@
 
 </script>
 <title>Diaglit try page</title>
-<body onload="prettyPrint()">
-	<div class="topbar">
-		<div class="fill">
-			<div class="container">
-				<a class="brand" href="#">Diaglit</a>
-				<ul class="nav">
-					<li class="active">
-						<a href="https://github.com/carlo-colombo/diaglit">Home</a>
-					</li>
-					<li>
-						<a href="https://github.com/carlo-colombo/diaglit/blob/master/README.md">About</a>
-					</li>
-					<li>
-						<a href="#contact">Contact</a>
-					</li>
-				</ul>
-			</div>
+<div class="topbar">
+	<div class="fill">
+		<div class="container">
+			<a class="brand" href="#">Diaglit</a>
+			<ul class="nav">
+				<li class="active">
+					<a href="/index.html">Home</a>
+				</li>
+				<li>
+					<a href="https://github.com/carlo-colombo/diaglit/blob/master/README.md">About</a>
+				</li>
+				<li class="dropdown" data-dropdown="dropdown">
+					<a href="#" class="dropdown-toggle">Test</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="/test/test.html">diaglit</a>
+						</li>
+						<li>
+							<a href="/diaglit.controls/test/test.html">diaglit.controls</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#contact">Contact</a>
+				</li>
+			</ul>
 		</div>
 	</div>
-	<div class="container">
-		<div class="content">
-			<div class="page-header">
-				<h1>
-					Examples
-					<small>Click buttons labeled "Open" to open the matching dialog</small>
-				</h1>
-			</div>
-			<div class="row">
-				<div class="span10">
-					<section>
-						<a href="" class="btn">Open</a>
-						<pre class="dialog-definition">
+</div>
+<div class="container">
+	<div class="content">
+		<div class="page-header">
+			<h1>
+				Examples
+				<small>Click buttons labeled "Open" to open the matching dialog</small>
+			</h1>
+		</div>
+		<div class="row">
+			<div class="span10">
+				<section>
+					<a href="" class="btn">Open</a>
+					<pre class="dialog-definition">
 {
 	"tabs": {
 		"tab1": {
@@ -87,40 +95,39 @@
 	"title": "Properties"
 }
 					</pre>
-					</section>
-				</div>
-				<div class="span4">
-					<h3>Controls</h3>
-					<ul>
-						<li>
-							<h4>Minimal configuration</h4>
-							<pre class="prettyprint lang-js">{"name": "minimal"}</pre>
-						</li>
-						<li>
-							<h4>HTML5 controls</h4>
-							<pre class="prettyprint lang-js">
+				</section>
+			</div>
+			<div class="span4">
+				<h3>Controls</h3>
+				<ul>
+					<li>
+						<h4>Minimal configuration</h4>
+						<pre class="prettyprint lang-js">{"name": "minimal"}</pre>
+					</li>
+					<li>
+						<h4>HTML5 controls</h4>
+						<pre class="prettyprint lang-js">
 {"name": "date",
 "type":"date"}
 							</pre>
-							<pre class="prettyprint lang-js">
+						<pre class="prettyprint lang-js">
 {"name": "range",
 "type":"range"}
 							</pre>
-							...
-						</li>
-						<li>
-							<h4>Hidden</h4>
-							<pre class="prettyprint lang-js">
+						...
+					</li>
+					<li>
+						<h4>Hidden</h4>
+						<pre class="prettyprint lang-js">
 {"name": "mrHyde",
 "type":"hidden",
 "value": "hidden value"}
 							</pre>
-						</li>
-					</ul>
-				</div>
-
+					</li>
+				</ul>
 			</div>
+
 		</div>
-		<footer></footer>
 	</div>
-</body>
+	<footer></footer>
+</div>
