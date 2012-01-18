@@ -10,7 +10,9 @@
 <script src="test.js"></script>
 <script>
       onload = function(){
-        var runner = mocha.run();
+        var runner = mocha
+        	.run()
+        	.globals(['j'])
       };
 </script>
 <style type="text/css">
