@@ -32,7 +32,7 @@
 		        </div>\
 		        <div class="modal-body">\
 		        	<ul class="nav nav-tabs"></ul>\
-		        	<form class="tab-content"></form>\
+		        	<form class="tab-content form-horizontal"></form>\
 	        	</div>\
 	        	<div class="modal-footer">\
 		            <a href="#" class="btn secondary cancel">Cancel</a>\
