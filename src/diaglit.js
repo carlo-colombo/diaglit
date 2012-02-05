@@ -10,7 +10,7 @@
 			_diaglit = {},
 			li = _.template('\
 				<li>\
-					<a href="<%= href %>"><%= label %></a>\
+					<a href="<%= href %>" data-toggle="tab"><%= label %></a>\
 				</li>\
 			') //li template definition
 		if (_.isFunction(options)) {
@@ -31,7 +31,7 @@
 		            <h3><%= title %></h3>\
 		        </div>\
 		        <div class="modal-body">\
-		        	<ul class="nav nav-tabs" data-tabs="tabs"></ul>\
+		        	<ul class="nav nav-tabs"></ul>\
 		        	<form class="tab-content"></form>\
 	        	</div>\
 	        	<div class="modal-footer">\
