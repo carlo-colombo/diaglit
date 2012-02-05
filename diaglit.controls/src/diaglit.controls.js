@@ -6,9 +6,9 @@
 	var _controls = {},
 		_ = require('underscore'),
 		control_tpl = _.template('\
-			<div class="clearfix">\
+			<div class="control-group">\
 				<label for="<%= name %>"><%= label %></label>\
-				<div class="input">\
+				<div class="controls">\
 					<% if(help) { %>\
 						<span class="help-block"><%= help %></span>\
 					<% } %>\
@@ -66,7 +66,7 @@
 				label: _.isFunction(label) ? label(control.name) : label,
 				help: control.help
 			}))
-			_field.find('.input').prepend(makeInput(control, data))
+			_field.find('.controls').prepend(makeInput(control, data))
 
 			return _field
 		}
