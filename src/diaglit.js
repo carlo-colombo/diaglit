@@ -31,7 +31,7 @@
 		            <h3><%= title %></h3>\
 		        </div>\
 		        <div class="modal-body">\
-		        	<ul class="tabs" data-tabs="tabs"></ul>\
+		        	<ul class="nav nav-tabs" data-tabs="tabs"></ul>\
 		        	<form class="tab-content"></form>\
 	        	</div>\
 	        	<div class="modal-footer">\
