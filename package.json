@@ -19,7 +19,7 @@
     "ender-bootstrap-tab": "*",
     "ender-bootstrap-modal": "*",
     "underscore": "*",
-    "diaglit.controls": ">0.4.0"
+    "diaglit.controls": ">=0.4.0"
   },
   "main": "src/diaglit.js",
   "ender": "noop",
