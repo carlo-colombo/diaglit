@@ -19,11 +19,11 @@
     "ender-bootstrap-tab": "*",
     "ender-bootstrap-modal": "*",
     "underscore": "*",
-    "diaglit.controls": ">0.4.0"
+    "diaglit.controls": ">=0.4.0"
   },
   "main": "src/diaglit.js",
   "ender": "noop",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "devDependencies": {},
   "engines": {
     "node": "*"
