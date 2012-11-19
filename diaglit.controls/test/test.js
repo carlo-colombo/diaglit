@@ -59,9 +59,9 @@ describe('diaglit.controls', function() {
 					label = text.find('label'),
 					help = text.find('.help-block')
 
-					expect(text).to.be.not.empty
-					expect(input).to.be.not.empty
-					expect(help).to.be.empty
+					expect(text.length).to.be.not.empty
+					expect(input.length).to.be.not.empty
+					expect(help.length).to.be.empty
 
 					expect(input.attr('type')).to.be.equal('text')
 					expect(input.attr('name')).to.be.equal('text_field')
