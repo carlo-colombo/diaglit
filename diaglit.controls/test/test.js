@@ -80,7 +80,7 @@ describe('diaglit.controls', function() {
 			it('should create span.help-block', function() {
 				var help = controls.field(fields[2]).find('.help-block')
 
-				expect(help).to.be.not.empty
+				expect(help.length).to.be.not.empty
 				expect(help.text().trim()).to.be.equal('this is a help-block')
 			})
 
@@ -109,7 +109,7 @@ describe('diaglit.controls', function() {
 			it('should create textarea as configured', function() {
 				var textarea = controls.field(fields[3]).find('textarea')
 
-				expect(textarea).to.be.not.empty
+				expect(textarea.length).to.be.not.empty
 				expect(textarea.text().trim()).to.be.equal('this is a textarea value')
 			})
 
@@ -160,12 +160,12 @@ describe('diaglit.controls', function() {
 			var select = controls.field(field);
 
 			it('should create html select with name attribute', function() {
-				expect(select.find('select')).to.be.not.empty;
+				expect(select.find('select').length).to.be.not.empty;
 				expect(select.find('select').attr('name')).to.be.equal('select_field')
 			})
 
 			it('should create 3 options inside select', function() {
-				expect(select.find('select > option')).to.be.not.empty;
+				expect(select.find('select > option').length).to.be.not.empty;
 				expect(select.find('select > option').length).to.be.equal(3)
 			})
 
@@ -180,7 +180,7 @@ describe('diaglit.controls', function() {
 			})
 
 			it('should set selected where attribute is present', function() {
-				expect(select.find('select > option[selected]:nth-child(3)')).to.be.not.empty
+				expect(select.find('select > option[selected]:nth-child(3)').length).to.be.not.empty
 			})
 
 			it('should permit data overriding selected value', function() {
@@ -188,7 +188,7 @@ describe('diaglit.controls', function() {
 					'select_field': 'value option'
 				})
 
-				expect(selectWithData.find('select > option[selected]:nth-child(1)')).to.be.not.empty
+				expect(selectWithData.find('select > option[selected]:nth-child(1)').length).to.be.not.empty
 			})
 		})
 	})
