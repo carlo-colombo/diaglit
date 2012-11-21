@@ -7,7 +7,7 @@
 		_ = require('underscore'),
 		control_tpl = _.template('\
 			<div class="control-group">\
-				<label for="<%= name %>"><%= label %></label>\
+				<label class="control-label" for="<%= name %>"><%= label %></label>\
 				<div class="controls">\
 					<% if(help) { %>\
 						<span class="help-block"><%= help %></span>\
@@ -40,13 +40,7 @@
 		//removing options from select properties
 		delete prop['options']
 
-		return _(control.options).map(function(opt) {
-			if (_.isString(opt)) {
-				opt = {
-					'value': opt,
-					'label': opt
-				}
-			}
+		return _(control.options).map(getOption).map(function(opt) {
 			opt['selected'] = data && data[control.name] == opt['value'] || !! opt['selected'] ? 'selected' : '';
 			return t_opt(opt)
 		}).reduce(function(select, opt) {
@@ -54,8 +48,33 @@
 		}, $('<select>').attr(prop))
 	})
 
-	// field generator
+	_controls['radio'] = _controls['checkbox'] = field(function(control,data){
+		var t_control = _.template('\
+			<label class="<%= type %>">\
+              <input type="<%= type %>" name="<%=name %>" <%=checked %> value="<%=value %>"><%=label%>\
+            </label>');
 
+		return _(control.options)
+			.map(getOption)
+			.map(function(opt){
+				opt['name'] = control['name'];
+				opt['type'] = control['type'];
+				return opt
+			}).map(function(opt){
+				if (opt['checked'] 
+						&& data
+						&& data[opt.name] 
+						&& data[opt.name] != opt.value ){
+					opt['checked'] = null 
+				}
+				opt['checked'] = data && data[control.name] == opt['value'] || !! opt['checked'] ? 'checked' : '';
+				return t_control(opt)
+			}).reduce(function(base,html){
+				return base + html
+			},'')
+	})
+
+	// field generator
 	function field(makeInput) {
 		return function(control, data) {
 			var label = control.label ||
@@ -79,6 +98,13 @@
 		return $('<input>').attr(_(control).extend({
 			'id': control.name
 		})).css('height', 'auto'); // ??? fix ???
+	}
+
+	function getOption(opt){
+		return (_.isString(opt)) ? {
+			'value': opt,
+			'label': opt
+		} : opt ;
 	}
 
 	_controls['NotImplementedException'] = function(type) {

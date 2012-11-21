@@ -191,5 +191,83 @@ describe('diaglit.controls', function() {
 				expect(selectWithData.find('select > option[selected]:nth-child(1)').length).to.be.not.empty
 			})
 		})
+
+		describe('radio and checkbox controls',function(){
+			var field = {
+				name: 'radio_field',
+				type: 'radio',
+				options: ['value option',
+				{
+					'label': 'label',
+					'value': 'value'
+				}, {
+					'label': 'label2',
+					'value': 'value2',
+					'checked': true
+				}]
+			}
+			/*
+
+			<label class="radio">
+              <input type="radio"> Check me out
+            </label>
+            <label class="radio">
+              <input type="radio"> Check me out
+            </label>
+
+			*/
+
+			var radio = controls.field(field);
+
+			it('should create 3 input[type="radio"] ',function () {
+				expect(radio.find('input[type=radio]').length).to.be.not.empty;
+				expect(radio.find('input[type=radio]').length).to.be.equal(3)
+				expect(radio.find('input[type=radio]').attr('name')).to.be.equal('radio_field')
+			})
+
+			it('should use string as value and label', function(){
+				var firstRadio = radio.find('label:nth-child(1) > input[type=radio]');
+				expect(firstRadio.attr('value')).to.be.equal('value option')
+				expect(firstRadio.parent().text()).to.have.string('value option')
+			})
+
+			it('should use object label and value as value and label',function(){
+				var secondRadio = radio.find('label:nth-child(2) > input[type=radio]');
+				expect(secondRadio.attr('value')).to.be.equal('value')	
+				expect(secondRadio.parent().text()).to.have.string('label')
+			})
+
+			it('should create 3 input with the same name',function(){
+				expect(radio.find('input[name=radio_field]').length).to.be.equal(3)
+			})
+
+			it('should set label class equal to type',function(){
+				var secondRadio = radio.find('label:nth-child(2) > input[type=radio]');
+				expect(secondRadio.parent().attr('class')).to.be.equal('radio')
+			})
+
+			it('should set checked', function(){
+				var thirdRadio = radio.find('label:nth-child(3) > input[checked]');
+				expect(thirdRadio.length).to.be.equal(1)
+			})
+
+			it('should use data to set checked',function(){
+				var checked = controls.field(field, {
+					'radio_field': 'value'
+				}).find('input[checked]')				
+				expect(checked.length).to.be.equal(1)
+			});
+
+			it('should create type="checkbox" too',function(){
+				var checkbox = controls.field({
+					name:'checkbox_too',
+					type:'checkbox',
+					options: [
+						'first and last'
+					]
+				});
+				expect(checkbox.find('input[type=checkbox]').length).to.be.equal(1)
+			})
+		});
 	})
 })
