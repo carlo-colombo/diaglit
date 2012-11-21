@@ -29,6 +29,10 @@ ender.domReady(function() {
 							"name": "select",
 							"type": "select",
 							"options": ["option 1", "option 2"]
+						},{
+							"name": "radio",
+							"type": "radio",
+							"options" :["first radio", "second radio"]
 						}]
 					}
 				},
