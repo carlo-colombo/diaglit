@@ -25,9 +25,9 @@
 
 		//dialog skeleton
 		_diaglit.$dialog = $(_.template('\
-			<div id="<%= id %>" title="<%= title %>" class="modal">\
+			<div id="<%= id %>" title="<%= title %>" class="modal" data-show="false">\
 				<div class="modal-header">\
-		            <a href="#" class="close">x</a>\
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>\
 		            <h3><%= title %></h3>\
 		        </div>\
 		        <div class="modal-body">\
