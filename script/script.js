@@ -7,7 +7,8 @@
 				d = diaglit(JSON.parse($el.text()));
 			
 			$el.previous()
-				.attr('data-controls-modal',d.$dialog.attr('id'))
+				.attr('data-toggle', 'modal')
+				.attr('href','#' + d.$dialog.attr('id'))
 		})
 	})
 })(ender, require('underscore'))

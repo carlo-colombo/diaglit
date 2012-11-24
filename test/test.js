@@ -29,6 +29,10 @@ ender.domReady(function() {
 							"name": "select",
 							"type": "select",
 							"options": ["option 1", "option 2"]
+						},{
+							"name": "radio",
+							"type": "radio",
+							"options" :["first radio", "second radio"]
 						}]
 					}
 				},
@@ -52,11 +56,6 @@ ender.domReady(function() {
 		})
 
 		describe('when created', function() {
-			it('should have a Modal istance as attribute data-modal', function() {
-				var d = require('diaglit')(dialog1)
-				expect(d.$dialog.data('modal')).to.be.an.instanceof(ender.fn.modal.Modal)
-			})
-
 			it('should initialize dialog using data option', function() {
 				var d = require('diaglit')(dialog1, {
 					data: {

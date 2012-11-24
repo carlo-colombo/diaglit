@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
 <script src="script/ender.js"></script>
 <script src="script/script.js"></script>
 <style type="text/css">
@@ -20,9 +20,9 @@
 
 </script>
 <title>Diaglit try page</title>
-<div class="topbar">
-	<div class="fill">
-		<div class="container">
+<div class="container">
+	<div class="navbar">
+		<div class="navbar-inner">
 			<a class="brand" href="#">Diaglit</a>
 			<ul class="nav">
 				<li class="active">
@@ -31,25 +31,23 @@
 				<li>
 					<a href="https://github.com/carlo-colombo/diaglit/blob/master/README.md">About</a>
 				</li>
-				<li class="dropdown" data-dropdown="dropdown">
-					<a href="#" class="dropdown-toggle">Test</a>
-					<ul class="dropdown-menu">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						Test
+						<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu" role="menu">
 						<li>
-							<a href="http://carlo-colombo.github.com/diaglit/test/test.html">diaglit</a>
+							<a target="_blank" href="http://carlo-colombo.github.com/diaglit/test/test.html">diaglit</a>
 						</li>
 						<li>
-							<a href="http://carlo-colombo.github.com/diaglit/diaglit.controls/test/test.html">diaglit.controls</a>
+							<a target="_blank" href="http://carlo-colombo.github.com/diaglit/diaglit.controls/test/test.html">diaglit.controls</a>
 						</li>
 					</ul>
-				</li>
-				<li>
-					<a href="#contact">Contact</a>
 				</li>
 			</ul>
 		</div>
 	</div>
-</div>
-<div class="container">
 	<div class="content">
 		<div class="page-header">
 			<h1>
@@ -58,7 +56,7 @@
 			</h1>
 		</div>
 		<div class="row">
-			<div class="span10">
+			<div class="span8">
 				<section>
 					<a href="" class="btn">Open</a>
 					<pre class="dialog-definition">
@@ -89,6 +87,14 @@
 				"name": "select",
 				"type": "select",
 				"options": ["option 1", "option 2"]
+			},{
+				"name": "radios",
+				"type": "radio",
+				"options": ["Radio 105", "RDS", {
+					"value": "radio2",
+					"label": "Radio 2",
+					"checked": true
+				}]
 			}]
 		}
 	},
@@ -123,6 +129,17 @@
 "type":"hidden",
 "value": "hidden value"}
 							</pre>
+					</li>
+					<li>
+						<h4>Radio, checkbox</h4>
+						<pre>
+{"name": "check_this",
+"type": "checkbox,"
+"options":[
+	"first value",
+	"second value"
+]}
+						</pre>
 					</li>
 				</ul>
 			</div>

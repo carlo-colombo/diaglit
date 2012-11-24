@@ -59,9 +59,9 @@ describe('diaglit.controls', function() {
 					label = text.find('label'),
 					help = text.find('.help-block')
 
-					expect(text).to.be.not.empty
-					expect(input).to.be.not.empty
-					expect(help).to.be.empty
+					expect(text.length).to.be.not.empty
+					expect(input.length).to.be.not.empty
+					expect(help.length).to.be.empty
 
 					expect(input.attr('type')).to.be.equal('text')
 					expect(input.attr('name')).to.be.equal('text_field')
@@ -80,7 +80,7 @@ describe('diaglit.controls', function() {
 			it('should create span.help-block', function() {
 				var help = controls.field(fields[2]).find('.help-block')
 
-				expect(help).to.be.not.empty
+				expect(help.length).to.be.not.empty
 				expect(help.text().trim()).to.be.equal('this is a help-block')
 			})
 
@@ -109,7 +109,7 @@ describe('diaglit.controls', function() {
 			it('should create textarea as configured', function() {
 				var textarea = controls.field(fields[3]).find('textarea')
 
-				expect(textarea).to.be.not.empty
+				expect(textarea.length).to.be.not.empty
 				expect(textarea.text().trim()).to.be.equal('this is a textarea value')
 			})
 
@@ -160,12 +160,12 @@ describe('diaglit.controls', function() {
 			var select = controls.field(field);
 
 			it('should create html select with name attribute', function() {
-				expect(select.find('select')).to.be.not.empty;
+				expect(select.find('select').length).to.be.not.empty;
 				expect(select.find('select').attr('name')).to.be.equal('select_field')
 			})
 
 			it('should create 3 options inside select', function() {
-				expect(select.find('select > option')).to.be.not.empty;
+				expect(select.find('select > option').length).to.be.not.empty;
 				expect(select.find('select > option').length).to.be.equal(3)
 			})
 
@@ -180,7 +180,7 @@ describe('diaglit.controls', function() {
 			})
 
 			it('should set selected where attribute is present', function() {
-				expect(select.find('select > option[selected]:nth-child(3)')).to.be.not.empty
+				expect(select.find('select > option[selected]:nth-child(3)').length).to.be.not.empty
 			})
 
 			it('should permit data overriding selected value', function() {
@@ -188,8 +188,86 @@ describe('diaglit.controls', function() {
 					'select_field': 'value option'
 				})
 
-				expect(selectWithData.find('select > option[selected]:nth-child(1)')).to.be.not.empty
+				expect(selectWithData.find('select > option[selected]:nth-child(1)').length).to.be.not.empty
 			})
 		})
+
+		describe('radio and checkbox controls',function(){
+			var field = {
+				name: 'radio_field',
+				type: 'radio',
+				options: ['value option',
+				{
+					'label': 'label',
+					'value': 'value'
+				}, {
+					'label': 'label2',
+					'value': 'value2',
+					'checked': true
+				}]
+			}
+			/*
+
+			<label class="radio">
+              <input type="radio"> Check me out
+            </label>
+            <label class="radio">
+              <input type="radio"> Check me out
+            </label>
+
+			*/
+
+			var radio = controls.field(field);
+
+			it('should create 3 input[type="radio"] ',function () {
+				expect(radio.find('input[type=radio]').length).to.be.not.empty;
+				expect(radio.find('input[type=radio]').length).to.be.equal(3)
+				expect(radio.find('input[type=radio]').attr('name')).to.be.equal('radio_field')
+			})
+
+			it('should use string as value and label', function(){
+				var firstRadio = radio.find('label:nth-child(1) > input[type=radio]');
+				expect(firstRadio.attr('value')).to.be.equal('value option')
+				expect(firstRadio.parent().text()).to.have.string('value option')
+			})
+
+			it('should use object label and value as value and label',function(){
+				var secondRadio = radio.find('label:nth-child(2) > input[type=radio]');
+				expect(secondRadio.attr('value')).to.be.equal('value')	
+				expect(secondRadio.parent().text()).to.have.string('label')
+			})
+
+			it('should create 3 input with the same name',function(){
+				expect(radio.find('input[name=radio_field]').length).to.be.equal(3)
+			})
+
+			it('should set label class equal to type',function(){
+				var secondRadio = radio.find('label:nth-child(2) > input[type=radio]');
+				expect(secondRadio.parent().attr('class')).to.be.equal('radio')
+			})
+
+			it('should set checked', function(){
+				var thirdRadio = radio.find('label:nth-child(3) > input[checked]');
+				expect(thirdRadio.length).to.be.equal(1)
+			})
+
+			it('should use data to set checked',function(){
+				var checked = controls.field(field, {
+					'radio_field': 'value'
+				}).find('input[checked]')				
+				expect(checked.length).to.be.equal(1)
+			});
+
+			it('should create type="checkbox" too',function(){
+				var checkbox = controls.field({
+					name:'checkbox_too',
+					type:'checkbox',
+					options: [
+						'first and last'
+					]
+				});
+				expect(checkbox.find('input[type=checkbox]').length).to.be.equal(1)
+			})
+		});
 	})
 })

@@ -10,7 +10,7 @@
 			_diaglit = {},
 			li = _.template('\
 				<li>\
-					<a href="<%= href %>"><%= label %></a>\
+					<a href="<%= href %>" data-toggle="tab"><%= label %></a>\
 				</li>\
 			') //li template definition
 		if (_.isFunction(options)) {
@@ -25,14 +25,14 @@
 
 		//dialog skeleton
 		_diaglit.$dialog = $(_.template('\
-			<div id="<%= id %>" title="<%= title %>" class="modal">\
+			<div id="<%= id %>" title="<%= title %>" class="modal" data-show="false">\
 				<div class="modal-header">\
-		            <a href="#" class="close">x</a>\
+		            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>\
 		            <h3><%= title %></h3>\
 		        </div>\
 		        <div class="modal-body">\
-		        	<ul class="tabs" data-tabs="tabs"></ul>\
-		        	<form class="tab-content"></form>\
+		        	<ul class="nav nav-tabs"></ul>\
+		        	<form class="tab-content form-horizontal"></form>\
 	        	</div>\
 	        	<div class="modal-footer">\
 		            <a href="#" class="btn secondary cancel">Cancel</a>\

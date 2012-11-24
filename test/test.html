@@ -1,71 +1,19 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript"></script>
 <link rel="stylesheet" href="https://raw.github.com/visionmedia/mocha/master/mocha.css" />
-<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
 <script src="../lib/ender.js"></script>
 <script type="text/javascript">ender.noConflict();</script>
 <script src="../diaglit.controls/src/diaglit.controls.js"></script>
 <script src="../src/diaglit.js"></script>
 <script src="https://raw.github.com/visionmedia/mocha/master/mocha.js"></script>
-<script type="text/javascript" src="https://raw.github.com/logicalparadox/chai/master/chai.js"></script>
-<script type="text/javascript">mocha.setup('bdd')</script>
+<script type="text/javascript" src="https://raw.github.com/chaijs/chai/master/chai.js"></script>
+<script type="text/javascript">
+	mocha.setup('bdd')
+</script>
 <script src="test.js"></script>
 <script>
       onload = function(){
-        var runner = mocha
-        	.run()
-        	.globals(['j']);
+        var runner = mocha.run();
       };
 </script>
-<style type="text/css">
-.content {
-	margin-top: 80px;
-}
-</style>
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-28395411-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-<title>Diaglit tests</title>
-<div class="topbar">
-	<div class="fill">
-		<div class="container">
-			<a class="brand" href="#">Diaglit</a>
-			<ul class="nav">
-				<li class="active">
-					<a href="http://carlo-colombo.github.com/diaglit/index.html">Home</a>
-				</li>
-				<li>
-					<a href="https://github.com/carlo-colombo/diaglit/blob/master/README.md">About</a>
-				</li>
-				<li class="dropdown" data-dropdown="dropdown">
-					<a href="#" class="dropdown-toggle">Test</a>
-					<ul class="dropdown-menu">
-						<li>
-							<a href="http://carlo-colombo.github.com/diaglit/test/test.html">diaglit</a>
-						</li>
-						<li>
-							<a href="http://carlo-colombo.github.com/diaglit/diaglit.controls/test/test.html">diaglit.controls</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="#contact">Contact</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-</div>
-<div class="container">
-	<div class="content">
-		<div id="mocha"></div>
-	</div>
-</div>
+<div id="mocha"></div>
