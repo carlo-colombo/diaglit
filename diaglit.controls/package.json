@@ -19,7 +19,7 @@
   },
   "main": "src/diaglit.controls.js",
   "ender": "noop",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "devDependencies": {},
   "engines": {
     "node": "*"
