@@ -35,7 +35,7 @@ describe('diaglit.controls', function() {
 			name: 'text_field',
 			type: 'text',
 			value: 'this is a default value'
-		}]
+		},"super_minimal_configuration_field"]
 
 	describe('field function', function() {
 		it('should throw NotImplementedException if control is not implemented', function() {
@@ -73,6 +73,12 @@ describe('diaglit.controls', function() {
 
 			it('should work with name as only parameter', function() {
 				var input = controls.field(fields[1]).find('input')
+
+				expect(input.attr('type')).to.be.equal('text')
+			})
+
+			it('should work with only a string as only element',function () {
+				var input = controls.field(fields[6]).find('input')
 
 				expect(input.attr('type')).to.be.equal('text')
 			})

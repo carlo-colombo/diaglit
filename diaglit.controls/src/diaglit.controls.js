@@ -117,12 +117,20 @@
 		'field': {
 			enumerable: false,
 			value: function(field, data) {
-				if ( !! field.type && !_controls[field.type]) {
+				//super minimal normalization
+				if (typeof field === "string" ){
+					field = {
+						name : field
+					}
+				}
+
+				//minimal normalization
+				field.type = field.type || 'text'
+
+				if (!_controls[field.type]) {
 					throw new _controls['NotImplementedException'](field.type)
 				}
-				return _controls[field.type || 'text'](_(field).defaults({
-					type: 'text'
-				}), data)
+				return _controls[field.type](field, data)
 			},
 		}
 	})
