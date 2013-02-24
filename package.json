@@ -23,7 +23,7 @@
   },
   "main": "src/diaglit.js",
   "ender": "noop",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "devDependencies": {},
   "engines": {
     "node": "*"
