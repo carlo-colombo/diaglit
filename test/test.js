@@ -37,6 +37,12 @@ ender.domReady(function() {
 					}
 				},
 				"title": "Properties"
+			},
+			dialog_single_tab = {
+				tabs :{
+					tab1  : dialog1.tabs.tab1
+				},
+				title : "Properties"
 			}
 
 		it('should be exposed', function() {
@@ -53,6 +59,12 @@ ender.domReady(function() {
 
 		it('should accept callback function as 2nd argument', function() {
 			d = diaglit(dialog1, function() {})
+		})
+
+		it('should hide tab if only one is present',function () {
+			var d2 = diaglit(dialog_single_tab)
+			d2.$dialog.modal('show')
+			expect(d2.$dialog.find('ul.nav-tabs').css('display')).to.be.equal('none')
 		})
 
 		describe('when created', function() {
